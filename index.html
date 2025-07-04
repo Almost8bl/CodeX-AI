@@ -2,21 +2,24 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeX AI - تسجيل الدخول</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CodeX AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* --- الإعدادات الأساسية والخطوط --- */
+        /* --- الإعدادات العامة والتصميم الأساسي --- */
         :root {
-            --dark-blue: #0d1b2a;
-            --mid-blue: #1b263b;
-            --light-blue: #415a77;
-            --accent-blue: #007bff; /* لون مميز للأزرار والإبرازات */
-            --silver-text: #E0E0E0;
-            --white-glow: #ffffff;
-            --card-background: rgba(27, 38, 59, 0.7); /* شفافية أكبر قليلاً للبطاقات */
+            --primary-bg: #0b1e36;
+            --secondary-bg: #1a2f4b;
+            --user-bubble-bg: #005c97;
+            --ai-bubble-bg: #273952;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0c4de;
+            --accent-color: #3498db;
+            --silver-gradient: linear-gradient(145deg, #ffffff, #b8c6dc, #e0e0e0);
+            --logout-red: #e74c3c; /* لون زر تسجيل الخروج */
+            --disclaimer-text-color: #888; /* لون النص الرمادي للتحذير */
         }
 
         * {
@@ -26,527 +29,930 @@
         }
 
         html, body {
-            min-height: 100%; /* استخدام min-height لضمان أن المحتوى يمكن أن يمد طول الصفحة */
-            font-family: 'Tajawal', sans-serif, 'Montserrat'; /* تفضيل الخط العربي */
-            overflow-x: hidden; /* منع شريط التمرير الأفقي */
-            color: var(--silver-text);
-            display: flex;
-            flex-direction: column; /* يسمح بتراص المحتوى عمودياً */
-            align-items: center; /* توسيط المحتوى أفقياً */
-            background: linear-gradient(315deg, var(--dark-blue) 25%, var(--mid-blue) 50%, var(--light-blue) 75%, var(--dark-blue) 100%);
-            background-size: 400% 400%;
-            animation: waveAnimation 15s ease infinite;
-            padding-bottom: 50px; /* مسافة في الأسفل */
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
         }
 
-        @keyframes waveAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- حاوية تسجيل الدخول الرئيسية (النمط الأصلي) --- */
-        .login-container {
-            text-align: center;
-            padding: 2.5rem 3rem; /* زيادة المسافة الداخلية لمزيد من المساحة */
+        /* --- حاوية التطبيق الرئيسية --- */
+        .chat-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 2.5rem; /* زيادة المسافة بين الشعار والنموذج */
-            position: relative;
-            z-index: 1; /* يضمن أنه فوق الخلفية المتحركة */
-            margin-top: 15vh; /* دفعه للأسفل من الأعلى أكثر */
-            margin-bottom: 6rem; /* مسافة أكبر أسفل حاوية تسجيل الدخول */
-            background-color: var(--card-background); /* إضافة خلفية للوضوح */
-            backdrop-filter: blur(5px); /* إضافة تأثير التمويه للاتساق */
-            -webkit-backdrop-filter: blur(5px);
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 90%; /* يشغل مساحة أكبر على الشاشات الكبيرة */
-            max-width: 400px; /* أقصى عرض لمنعه من أن يصبح واسعاً جداً */
+            height: 100vh; /* استخدام ارتفاع منفذ العرض الكامل */
+            width: 100%;
         }
 
-        /* --- تصميم الشعار --- */
-        .logo {
-            font-size: 3.5rem; /* شعار أكبر */
+        /* --- الشريط العلوي (الهيدر) --- */
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: rgba(26, 47, 75, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
             font-weight: 700;
-            letter-spacing: 3px; /* تباعد أكثر وضوحاً */
-            background: linear-gradient(145deg, #ffffff, #a9a9a9, #E0E0E0);
+            background: var(--silver-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 12px rgba(224, 224, 224, 0.3), 0 0 25px rgba(255, 255, 255, 0.15);
+            text-shadow: 0 0 15px rgba(224, 224, 224, 0.2);
+            animation: shimmer 5s infinite linear;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
 
-        /* --- تصميم نموذج تسجيل الدخول (الأصلي) --- */
-        .login-form {
+        .welcome-message {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* --- زر تسجيل الخروج --- */
+        .logout-button {
+            padding: 0.6rem 1rem;
+            background-color: var(--logout-red);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+
+        /* --- منطقة عرض الرسائل --- */
+        .message-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 1.8rem; /* زيادة المسافة */
-            width: 100%;
-            max-width: 350px; /* أقصى عرض لعناصر النموذج داخل الحاوية */
+            gap: 1rem;
         }
 
-        .input-field {
-            width: 100%;
-            padding: 1.1rem; /* مسافة داخلية أكبر قليلاً */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            background-color: rgba(27, 38, 59, 0.6);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            color: var(--silver-text);
-            font-size: 1.05rem; /* خط أكبر قليلاً */
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s ease;
-            text-align: right; /* محاذاة النص لليمين للغة العربية */
+        /* تخصيص شريط التمرير */
+        .message-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .message-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .message-area::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 10px;
         }
 
-        .input-field::placeholder {
-            color: rgba(224, 224, 224, 0.6);
+        .message {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 75%;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .input-field:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 18px rgba(65, 90, 119, 0.6); /* توهج أكثر وضوحاً */
-        }
-
-        .login-button {
-            padding: 1.1rem; /* مسافة داخلية أكبر قليلاً */
-            border: none;
-            border-radius: 8px;
-            background-color: var(--light-blue);
-            color: var(--white-glow);
-            font-size: 1.15rem; /* خط أكبر قليلاً */
-            font-weight: 700;
-            font-family: 'Tajawal', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* ظل أكثر وضوحاً */
-        }
-
-        .login-button:hover {
-            background-color: #5a7a9e;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* تأثير تحويم محسّن */
-            transform: translateY(-3px);
-        }
-
-        .login-button:active {
-            transform: translateY(0);
-        }
-
-        /* --- أقسام المحتوى الإضافية (أسفل تسجيل الدخول) --- */
-        .content-section {
-            width: 90%; /* استخدام العرض الكامل على الشاشات الكبيرة */
-            max-width: 1200px; /* أقصى عرض لمنع المحتوى من التمدد كثيراً */
-            margin: 4rem auto; /* مسافة بين الأقسام وتوسيطها */
-            padding: 3.5rem; /* زيادة المسافة الداخلية لإحساس أكثر اتساعاً */
-            background-color: var(--card-background);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .content-section h2 {
-            font-size: 2.8rem; /* عناوين أكبر */
-            color: var(--white-glow);
-            margin-bottom: 2.5rem; /* مسافة أكبر أسفل العنوان */
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
-        }
-
-        /* --- قسم الميزات --- */
-        .feature-cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* عرض أدنى أكبر للبطاقات */
-            gap: 2rem; /* زيادة المسافة */
-            text-align: right; /* محاذاة النص لليمين للميزات */
-        }
-
-        .feature-card {
-            background-color: rgba(255, 255, 255, 0.05); /* خلفية أفتح للبطاقات الفردية */
-            border-radius: 12px; /* نصف قطر حدود أكبر قليلاً */
-            padding: 2rem; /* زيادة المسافة الداخلية */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.08); /* حدود أكثر وضوحاً قليلاً */
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px); /* رفع أكثر وضوحاً */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            border-color: var(--accent-blue); /* إبراز الحدود عند التحويم */
-        }
-
-        .feature-card h3 {
-            font-size: 1.6rem; /* حجم خط أكبر */
-            color: var(--white-glow);
-            margin-bottom: 0.8rem;
-        }
-
-        .feature-card p {
-            font-size: 1.05rem; /* حجم خط أكبر قليلاً */
-            line-height: 1.6;
-            color: var(--silver-text);
-        }
-
-        /* --- قسم المؤسس --- */
-        .founder-card {
-            background-color: rgba(255, 255, 255, 0.05);
-            max-width: 650px; /* بطاقة أوسع */
-            margin: 0 auto; /* توسيط البطاقة */
-            padding: 3rem; /* مسافة داخلية أكبر */
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .founder-card img {
-            width: 180px; /* صورة أكبر */
-            height: 180px;
+        .message .avatar {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid var(--accent-blue); /* حدود أسمك */
-            margin-bottom: 2rem; /* مسافة أكبر أسفل الصورة */
-            box-shadow: 0 0 25px rgba(0, 123, 255, 0.5); /* توهج أكثر وضوحاً */
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
         }
 
-        .founder-card h3 {
-            font-size: 2.2rem; /* عنوان أكبر */
-            color: var(--white-glow);
-            margin-bottom: 0.8rem;
+        .message-content {
+            padding: 0.75rem 1rem;
+            border-radius: 18px;
+            white-space: pre-wrap; /* للحفاظ على الأسطر الجديدة */
+            line-height: 1.6;
         }
 
-        .founder-card p {
-            font-size: 1.15rem; /* نص أكبر */
-            line-height: 1.7;
-            color: var(--silver-text);
+        /* رسائل المستخدم */
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        .message.user .avatar {
+            background: var(--user-bubble-bg);
+        }
+        .message.user .message-content {
+            background-color: var(--user-bubble-bg);
+            border-bottom-right-radius: 4px;
         }
 
-        /* --- أقسام النص العادي (بدون خلفية بطاقة) --- */
-        .plain-text-section {
-            width: 90%; /* استخدام العرض الكامل على الشاشات الكبيرة */
-            max-width: 1000px; /* أقصى عرض لمنع المحتوى من التمدد كثيراً */
-            margin: 6rem auto 3rem auto; /* مسافة أكبر في الأعلى والأسفل */
+        /* رسائل الذكاء الاصطناعي */
+        .message.ai {
+            align-self: flex-start;
+        }
+        .message.ai .avatar {
+            background: var(--ai-bubble-bg);
+        }
+        .message.ai .message-content {
+            background-color: var(--ai-bubble-bg);
+            border-bottom-left-radius: 4px;
+        }
+        
+        /* مؤشر التفكير */
+        .thinking-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        .thinking-indicator .dots span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .thinking-indicator .dots span:nth-child(1) { animation-delay: -0.32s; }
+        .thinking-indicator .dots span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
+        /* --- منطقة الإدخال --- */
+        .input-area {
+            padding: 1rem 1.5rem;
+            background-color: var(--primary-bg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            position: relative; /* للسماح بتحريكه بالنسبة لموقعه الأصلي */
+            bottom: 10px; /* رفع الشريط للأعلى بمقدار 10 بكسل */
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.75rem;
+            background-color: var(--secondary-bg);
+            border-radius: 24px;
+            padding: 0.5rem 0.5rem 0.5rem 1.25rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #message-input {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            resize: none;
+            max-height: 120px; /* تحديد أقصى ارتفاع */
+            overflow-y: auto;
+            line-height: 1.5;
+        }
+        #message-input:focus {
+            outline: none;
+        }
+        #message-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .send-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            transition: background-color 0.2s;
+        }
+        .send-button:hover {
+            background-color: #4aa3e3;
+        }
+        .send-button svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.2s;
+        }
+        .send-button:hover svg {
+            transform: translateY(-2px);
+        }
+
+        /* نص التحذير */
+        .disclaimer-text {
             text-align: center;
-            position: relative;
-            z-index: 1; /* يضمن أن النص فوق أمواج الخلفية */
+            font-size: 0.75rem; /* خط صغير */
+            color: var(--disclaimer-text-color); /* لون رمادي */
+            margin-top: 0.5rem; /* مسافة أعلى من شريط الإدخال */
         }
-
-        .plain-text-section h2 {
-            font-size: 2.8rem; /* عناوين أكبر */
-            color: var(--white-glow);
-            margin-bottom: 2rem; /* مسافة أكبر أسفل العنوان */
-            text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
-        }
-
-        .plain-text-section p {
-            font-size: 1.25rem; /* نص أكبر */
-            line-height: 1.8;
-            color: var(--silver-text);
-        }
-
-        /* --- حقوق النشر --- */
-        .copyright {
-            font-size: 1rem; /* نص حقوق النشر أكبر قليلاً */
-            color: rgba(224, 224, 224, 0.7);
-            margin-top: 5rem; /* مسافة أكبر فوق حقوق النشر */
-            text-align: center;
-            width: 100%; /* يضمن أنه يمتد بعرض الشاشة */
-            position: relative;
-            z-index: 1;
-        }
-
-        /* --- التصميم المتجاوب --- */
-        @media (max-width: 1024px) {
-            .content-section {
-                padding: 3rem;
-                margin: 3rem auto;
-            }
-            .content-section h2 {
-                font-size: 2.5rem;
-                margin-bottom: 2rem;
-            }
-            .feature-cards-container {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1.5rem;
-            }
-            .feature-card {
-                padding: 1.8rem;
-            }
-            .feature-card h3 {
-                font-size: 1.5rem;
-            }
-            .feature-card p {
-                font-size: 1rem;
-            }
-            .founder-card {
-                padding: 2.5rem;
-            }
-            .founder-card img {
-                width: 160px;
-                height: 160px;
-            }
-            .founder-card h3 {
-                font-size: 2rem;
-            }
-            .founder-card p {
-                font-size: 1.1rem;
-            }
-            .plain-text-section {
-                margin: 5rem auto 2.5rem auto;
-            }
-            .plain-text-section h2 {
-                font-size: 2.5rem;
-            }
-            .plain-text-section p {
-                font-size: 1.15rem;
-            }
-        }
-
+        
+        /* تصميم متجاوب */
         @media (max-width: 768px) {
-            .login-container {
-                margin-top: 10vh;
-                margin-bottom: 4rem;
-                padding: 2rem 2.5rem;
-                max-width: 350px; /* أضيق للأجهزة اللوحية الأصغر/الهواتف الكبيرة */
-                gap: 2rem;
+            .chat-header, .input-area {
+                padding: 0.75rem 1rem;
             }
-            .logo {
-                font-size: 3rem;
-                letter-spacing: 2px;
-            }
-            .login-form {
-                gap: 1.5rem;
-            }
-            .input-field, .login-button {
+            .message-area {
                 padding: 1rem;
-                font-size: 1rem;
             }
-
-            .content-section {
-                padding: 2rem;
-                margin: 2.5rem auto;
-                width: 95%; /* استخدام عرض أكبر على الشاشات الأصغر */
+            .message {
+                max-width: 90%;
             }
-            .content-section h2 {
-                font-size: 2.2rem;
-                margin-bottom: 1.8rem;
-            }
-
-            .feature-cards-container {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* السماح بعمودين على معظم الهواتف */
-                gap: 1.2rem;
-            }
-            .feature-card {
-                padding: 1.5rem;
-            }
-            .feature-card h3 {
-                font-size: 1.3rem;
-            }
-            .feature-card p {
-                font-size: 0.95rem;
-            }
-
-            .founder-card {
-                padding: 2rem;
-                max-width: 100%; /* ملء العرض المتاح */
-            }
-            .founder-card img {
-                width: 140px;
-                height: 140px;
-                margin-bottom: 1.5rem;
-            }
-            .founder-card h3 {
-                font-size: 1.8rem;
-            }
-            .founder-card p {
-                font-size: 1.05rem;
-            }
-
-            .plain-text-section {
-                margin: 4rem auto 2rem auto;
-                width: 90%; /* استخدام عرض أكبر */
-            }
-            .plain-text-section h2 {
-                font-size: 2.2rem;
-            }
-            .plain-text-section p {
-                font-size: 1.1rem;
-            }
-            .copyright {
-                margin-top: 4rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding-bottom: 30px;
-            }
-            .login-container {
-                padding: 1.5rem 1.8rem;
-                gap: 1.5rem;
-                margin-top: 8vh;
-                margin-bottom: 3rem;
-                width: 95%; /* زيادة العرض على أصغر الشاشات */
-            }
-            .logo {
-                font-size: 2.5rem;
-                letter-spacing: 1.5px;
-            }
-            .input-field, .login-button {
-                padding: 0.9rem;
-                font-size: 0.95rem;
-            }
-
-            .content-section {
-                padding: 1.5rem;
-                margin: 2rem auto;
-            }
-            .content-section h2 {
-                font-size: 1.8rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .feature-cards-container {
-                grid-template-columns: 1fr; /* تراص جميع البطاقات عمودياً على الهواتف الصغيرة جداً */
-                gap: 1rem;
-            }
-            .feature-card {
-                padding: 1.2rem;
-            }
-            .feature-card h3 {
-                font-size: 1.1rem;
-            }
-            .feature-card p {
-                font-size: 0.85rem;
-            }
-
-            .founder-card {
-                padding: 1.5rem;
-            }
-            .founder-card img {
-                width: 100px;
-                height: 100px;
-            }
-            .founder-card h3 {
-                font-size: 1.5rem;
-            }
-            .founder-card p {
-                font-size: 0.9rem;
-            }
-
-            .plain-text-section {
-                margin: 3rem auto 1.5rem auto;
-            }
-            .plain-text-section h2 {
-                font-size: 1.8rem;
-            }
-            .plain-text-section p {
-                font-size: 1rem;
-            }
-            .copyright {
-                margin-top: 3rem;
-                font-size: 0.85rem;
-            }
+            .logo-text { font-size: 1.25rem; }
+            .welcome-message { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <h1 class="logo">CodeX AI</h1>
-        <form class="login-form" id="loginForm">
-            <input type="text" id="username" class="input-field" placeholder="اسم المستخدم" required autocomplete="off">
-            <button type="submit" class="login-button">تسجيل الدخول</button>
-        </form>
-    </div>
-
-    <div class="content-section">
-        <h2>القدرات الرئيسية</h2>
-        <div class="feature-cards-container">
-            <div class="feature-card">
-                <h3>حل المشكلات المتقدم</h3>
-                <p>استفد من أحدث الخوارزميات لمواجهة التحديات المعقدة وإيجاد الحلول المثلى بكفاءة.</p>
+    <div class="chat-container">
+        <header class="chat-header">
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0ZM50 88.2353C28.9137 88.2353 11.7647 71.0863 11.7647 50C11.7647 28.9137 28.9137 11.7647 50 11.7647C71.0863 11.7647 88.2353 28.9137 88.2353 50C88.2353 71.0863 71.0863 88.2353 50 88.2353Z" fill="url(#paint0_linear_46_2)"/>
+                    <path d="M50 23.5293C35.3929 23.5293 23.5294 35.3928 23.5294 49.9999C23.5294 64.607 35.3929 76.4705 50 76.4705C64.6071 76.4705 76.4706 64.607 76.4706 49.9999C76.4706 35.3928 64.6071 23.5293 50 23.5293Z" stroke="url(#paint1_linear_46_2)" stroke-width="3"/>
+                    <defs>
+                        <linearGradient id="paint0_linear_46_2" x1="50" y1="0" x2="50" y2="100" gradientUnits="userSpaceOnUse"><stop stop-color="#3498DB"/><stop offset="1" stop-color="#2980B9"/></linearGradient>
+                        <linearGradient id="paint1_linear_46_2" x1="50" y1="23.5293" x2="50" y2="76.4705" gradientUnits="userSpaceOnUse"><stop stop-color="#E0E0E0"/><stop offset="1" stop-color="#B0C4DE"/></linearGradient>
+                    </defs>
+                </svg>
+                <span class="logo-text">CodeX AI</span>
             </div>
-            <div class="feature-card">
-                <h3>توليد المحتوى الإبداعي</h3>
-                <p>إنشاء نصوص عالية الجودة، مقتطفات برمجية، وأفكار مبتكرة عبر مختلف المجالات.</p>
-            </div>
-            <div class="feature-card">
-                <h3>التعلم والنمو الشخصي</h3>
-                <p>احصل على رؤى وتوصيات مخصصة لتعزيز التعلم المستمر وتطوير المهارات.</p>
-            </div>
-            <div class="feature-card">
-                <h3>تكامل سلس لسير العمل</h3>
-                <p>ادمج CodeX AI في أدواتك ومنصاتك الحالية لتجربة عمل سلسة ومنتجة.</p>
-            </div>
-        </div>
-    </div>
+            <div id="welcome-message" class="welcome-message"></div>
+            <button id="logout-button" class="logout-button"> تسجيل خروج</button>
+        </header>
 
-    <div class="content-section">
-        <h2>تعرّف على صاحب الرؤية</h2>
-        <div class="founder-card">
-            <img src="https://i.pravatar.cc/150?img=68" alt="فيوتشر - مؤسس CodeX AI">
-            <h3>فيوتشر</h3>
-            <p>فيوتشر هو العقل المبتكر وراء CodeX AI، مدفوعًا بشغف تمكين الأفراد والشركات من خلال الذكاء الاصطناعي المتقدم. بخلفيته في أبحاث الذكاء الاصطناعي وفهم عميق للتفاعل بين الإنسان والحاسوب، تصور فيوتشر CodeX AI كأداة لسد الفجوة بين التكنولوجيا المعقدة والإنتاجية اليومية، بهدف جعل الذكاء الاصطناعي متاحًا ومفيدًا للجميع.</p>
-        </div>
-    </div>
+        <main id="message-area" class="message-area"></main>
 
-    <div class="plain-text-section">
-        <h2>رؤيتنا</h2>
-        <p>في CodeX AI، تتمثل رؤيتنا في إنشاء أنظمة ذكية لا تحل المشكلات المعقدة فحسب، بل تمكّن القدرات البشرية أيضًا. نحن نؤمن بمستقبل يعمل فيه الذكاء الاصطناعي بشكل تعاوني مع الأفراد، مما يعزز قدراتهم، ويشعل الابتكار، ويساهم إيجابًا في مواجهة أهم تحديات المجتمع. نحن ملتزمون بتطوير الذكاء الاصطناعي الأخلاقي ونهج يركز على المستخدم لضمان إمكانية الوصول والتأثير الهادف للجميع.</p>
-    </div>
-
-    <div class="copyright">
-        &copy; 2025 CodeX AI. جميع الحقوق محفوظة.
+        <footer class="input-area">
+            <div class="input-wrapper">
+                <textarea id="message-input" placeholder="Have a question? Ask here." rows="1"></textarea>
+                <button id="send-button" class="send-button" aria-label="إرسال">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 11L12 6L17 11M12 18V7" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="disclaimer-text">CodeX AI can make mistakes. Review its responses.</div>
+        </footer>
     </div>
 
     <script>
-        // هذا السكريبت يتعامل مع:
-        // 1. التحقق الفوري مما إذا كان المستخدم مسجلاً للدخول بالفعل لإعادة التوجيه.
-        // 2. معالجة عملية تسجيل الدخول عند إرسال النموذج.
-        
-        (function() {
-            // --- التحقق الفوري من وجود اسم مستخدم حالي ---
-            const savedUsername = localStorage.getItem('username');
-            if (savedUsername) {
-                console.log(`المستخدم الحالي: ${savedUsername}. يتم إعادة التوجيه إلى index.html...`); // تسجيل لغرض التصحيح
-                // إذا تم العثور على اسم مستخدم، أعد التوجيه فوراً إلى الصفحة الرئيسية
-                window.location.href = 'index.html'; 
+    // ===================================================================================
+    //  محرك الذكاء الاصطناعي CodeX AI - محاكاة متقدمة من جانب العميل
+    //  Advanced Client-Side AI Engine Simulation
+    // ===================================================================================
+
+    (function() {
+        // --- تهيئة العناصر الأساسية ---
+        const messageArea = document.getElementById('message-area');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const welcomeMessage = document.getElementById('welcome-message');
+        const logoutButton = document.getElementById('logout-button'); // زر تسجيل الخروج
+        let username = '';
+
+        // -------------------------------------
+        //  وحدة الأمان (Security Module)
+        // -------------------------------------
+        const Security = {
+            sanitize: (text) => {
+                const element = document.createElement('div');
+                element.innerText = text;
+                return element.innerHTML;
             }
+        };
 
-            // --- معالجة إرسال النموذج ---
-            const loginForm = document.getElementById('loginForm');
-            const usernameInput = document.getElementById('username');
-
-            if (loginForm) { // تأكد من وجود النموذج قبل إضافة المستمع (يجب أن يكون موجوداً في هذه الصفحة)
-                loginForm.addEventListener('submit', function(event) {
-                    // منع السلوك الافتراضي للنموذج (إعادة تحميل الصفحة)
-                    event.preventDefault(); 
-
-                    // الحصول على القيمة من حقل الإدخال وإزالة المسافات البيضاء الزائدة
-                    const username = usernameInput.value.trim();
-
-                    // التحقق مما إذا كان اسم المستخدم غير فارغ
-                    if (username) {
-                        // حفظ اسم المستخدم في التخزين المحلي للمتصفح (localStorage)
-                        localStorage.setItem('username', username);
-                        
-                        console.log(`تم حفظ المستخدم: ${username}. يتم إعادة التوجيه إلى index.html...`); // تسجيل لغرض التصحيح
-
-                        // إعادة توجيه المستخدم إلى الصفحة الرئيسية
-                        window.location.href = 'index.html';
+        // -------------------------------------
+        //  وحدة الذاكرة (Memory Module)
+        // -------------------------------------
+        const Memory = {
+            data: {
+                interactionCount: 0,
+                topicFrequency: {},
+                userSentiment: 'neutral'
+            },
+            load: () => {
+                const savedMemory = localStorage.getItem('codex_memory');
+                if (savedMemory) {
+                    Memory.data = JSON.parse(savedMemory);
+                }
+            },
+            save: () => {
+                localStorage.setItem('codex_memory', JSON.stringify(Memory.data));
+            },
+            update: (tokens) => {
+                Memory.data.interactionCount++;
+                tokens.forEach(token => {
+                    if (Brain.Vocab.topics[token]) {
+                        Memory.data.topicFrequency[token] = (Memory.data.topicFrequency[token] || 0) + 1;
                     }
                 });
+                // يمكن إضافة تحليل مشاعر أكثر تعقيدًا هنا
+                Memory.save();
+            },
+            clearAll: () => { // وظيفة جديدة لمسح كل الذاكرة المحلية
+                localStorage.clear();
             }
-        })();
-    </script>
+        };
 
+       // -------------------------------------
+//  الدماغ الأساسي (Core Brain)
+// -------------------------------------
+const Brain = {
+    // --- قاموس المفردات واللغة (Linguistic Vocabulary) ---
+    Vocab: {
+        greetings: [
+            'مرحبا', 'أهلا', 'السلام', 'هاي', 'أهلاً بك', 'اهلا', 'مساء الخير', 'صباح الخير','السلام عليكم',
+            'كيف الحال', 'كيف الأمور', 'ياهلا', 'مرحباً بك', 'سررت بلقائك', 'أهلاً وسهلاً'
+        ],
+        farewells: [
+            'وداعا', 'باي', 'مع السلامة', 'أراك لاحقاً', 'إلى اللقاء', 'تصبح على خير',
+            'يوم سعيد', 'رحلة سعيدة', 'اعتني بنفسك', 'فقط أخبرني إذا احتجت أي شيء آخر',
+            'إلى اللقاء في وقت قريب', 'حظاً موفقاً'
+        ],
+        questions: [
+            'كيف', 'ماذا', 'لماذا', 'هل', 'أين', 'متى', 'من', 'أي', 'كم', 'بماذا', 'ما',
+            'ما هو', 'من هي', 'كيف يمكنني', 'كم عدد'
+        ],
+        gratitude: [
+            'شكرا', 'ممتن', 'أشكرك', 'جزيل الشكر', 'تسلم', 'عفوا', 'كثيرا', 'تقديراً',
+            'كل الشكر', 'شكراً جزيلاً', 'ألف شكر', 'مقدر جداً'
+        ],
+        affirmations: [
+            'نعم', 'بالتأكيد', 'صحيح', 'تمام', 'أوافق', 'ممتاز', 'بالضبط', 'مظبوط',
+            'حقاً', 'موافق', 'أجل', 'رائع', 'جيد جداً', 'بالضبط هكذا'
+        ],
+        negations: [
+            'لا', 'ليس', 'غير', 'خطأ', 'أرفض', 'مستحيل', 'محدش', 'لا أعتقد', 'غير صحيح',
+            'بالعكس', 'أبداً'
+        ],
+        requests: [
+            'أريد', 'أحتاج', 'ممكن', 'هل تستطيع', 'ساعدني', 'من فضلك', 'لو سمحت',
+            'هل يمكن', 'الرجاء', 'أود', 'كيف يمكنني الحصول على'
+        ],
+        emotions: [
+            'سعيد', 'حزين', 'غاضب', 'قلق', 'متحمس', 'متعب', 'مندهش', 'مكتئب', 'مرتاح',
+            'مرهق', 'مبهور', 'ضجر', 'ملل', 'فرح', 'يائس'
+        ],
+        topics: {
+            'ai': [
+                'ai', 'ذكاء اصطناعي', 'codex', 'نموذج', 'خوارزمية', 'تعلم آلة', 'شبكات عصبية',
+                'معالجة اللغة الطبيعية', 'روبوت', 'تكنولوجيا', 'تطوير الذكاء الاصطناعي',
+                'مستقبل الذكاء الاصطناعي', 'التعلم العميق', 'الرؤية الحاسوبية', 'الذكاء العام الاصطناعي'
+            ],
+            'code': [
+                'كود', 'برمجة', 'تطوير', 'javascript', 'بايثون', 'جافا', 'css', 'html',
+                'لغة برمجة', 'تطبيق', 'برنامج', 'خوارزميات', 'هندسة برمجيات', 'تصحيح أخطاء',
+                'إطار عمل', 'مكتبة', 'قاعدة بيانات', 'واجهة برمجة تطبيقات', 'Git', 'ويب',
+                'تطبيقات الجوال', 'خادم', 'فرونت إند', 'باك إند', 'ديف أوبس', 'أمن سيبراني',
+                'ذكاء الأعمال', 'بيانات كبيرة'
+            ],
+            'project': [
+                'مشروع', 'مهمة', 'عمل', 'مبادرة', 'خطة', 'تطوير', 'تنفيذ', 'إدارة',
+                'فكرة', 'بحث', 'دراسة جدوى', 'فريق', 'مراحل', 'استراتيجية', 'نتائج',
+                'تقييم', 'ميزانية', 'جدول زمني', 'مخاطر', 'أهداف'
+            ],
+            'self': [
+                'أنت', 'نفسك', 'من أنت', 'ماذا تفعل', 'دورك', 'قدراتك', 'خلقك', 'هويتك',
+                'ما اسمك', 'ما طبيعتك', 'هدف', 'وظيفة', 'الهدف منك'
+            ],
+            'help': [
+                'مساعدة', 'عون', 'دعم', 'كيف أستطيع', 'أريد', 'لو سمحت', 'ممكن تساعدني',
+                'طلب', 'مساعدة في'
+            ],
+            'feeling': [
+                'شعر', 'كيف حالك', 'ملل', 'حماس', 'تعب', 'مزاج', 'شعور', 'كيف تشعر',
+                'مشاعرك'
+            ],
+            'info': [
+                'معلومات', 'استفسار', 'سؤال', 'توضيح', 'أخبار', 'حقائق', 'بيانات',
+                'تعريف', 'شرح', 'تفاصيل'
+            ],
+            'politics': [
+                'سياسة', 'حكومة', 'دولة', 'انتخابات', 'ديمقراطية', 'دكتاتورية', 'برلمان',
+                'قانون', 'دستور', 'علاقات دولية', 'دبلوماسية', 'نزاع', 'سلام', 'حقوق إنسان',
+                'حزب', 'أيديولوجيا', 'سياسي', 'صراع'
+            ],
+            'economy': [
+                'اقتصاد', 'مال', 'سوق', 'عملات', 'تضخم', 'نمو اقتصادي', 'استثمار', 'أسهم',
+                'بطالة', 'تجارة', 'صادرات', 'واردات', 'ضرائب', 'بنك', 'ميزانية', 'فقر',
+                'ثروة', 'تنمية', 'ريادة أعمال', 'إفلاس'
+            ],
+            'civilization': [
+                'حضارة', 'تاريخ', 'ثقافة', 'فنون', 'علوم', 'آثار', 'قديم', 'حديث',
+                'مجتمع', 'تراث', 'لغة', 'دين', 'فلسفة', 'عمارة', 'ابتكارات', 'عادات',
+                'تقاليد', 'تطور', 'مجتمعات'
+            ]
+        },
+        responses: {
+            greeting: [
+                `أهلاً بك يا ${username}! يسعدني جداً تواجدك هنا. كيف يمكنني أن أجعل يومك أكثر إنتاجية وإثراءً بالمعرفة؟`,
+                `مرحباً ${username}، أنا CodeX، جاهز للاستماع إليك ومساعدتك. ما الذي يشغل بالك أو تود استكشافه اليوم؟`,
+                `يا أهلاً! أتمنى أن تجد كل ما تبحث عنه. أنا هنا لتزويدك بالمعلومات والمساعدة في مهامك.`,
+                `مرحباً ${username}! عالم المعرفة بين يديك. ما هي المغامرة التي نود الشروع فيها اليوم؟`,
+                `أهلاً بك مجدداً يا ${username}! سررت بعودتك. ما الجديد الذي تود مناقشته أو السؤال عنه؟`,
+                `صباح/مساء الخير يا ${username}! أتمنى أن يكون يومك مثمراً. أنا في انتظار أسئلتك.`,
+                `يا أهلاً بك! أنا هنا لتبسيط الأمور المعقدة وتقديم إجابات واضحة. كيف يمكنني خدمتك؟`,
+                `مرحباً بك في عالم CodeX AI! أنا مصمم لأكون دليلك في بحر المعلومات. بماذا تفكر؟`,
+                `سرني تواجدك يا ${username}. هيا نبدأ رحلة استكشاف ممتعة!`,
+                `أهلاً بك في أي وقت يا ${username}. تذكر أنني هنا لمساعدتك في كل خطوة.`
+            ],
+            farewell: [
+                'إلى اللقاء! أتمنى أن تكون قد حصلت على كل ما احتجته. أتطلع لرؤيتك قريباً مرة أخرى.',
+                'وداعاً! تذكر أن CodeX AI دائماً هنا من أجلك. اعتني بنفسك وإلى لقاء قريب.',
+                'مع السلامة! كان من دواعي سروري مساعدتك. لا تتردد في العودة متى احتجت أي شيء.',
+                'إلى اللقاء! أتمنى لك يوماً رائعاً ومليئاً بالإنجازات. لا تتردد في العودة.',
+                'نلتقي مرة أخرى! كانت محادثة مثمرة ومليئة بالمعرفة. إلى اللقاء!',
+                'حظاً موفقاً في كل ما تفعله! أنا دائماً متاح لمساعدتك.',
+                'يوم سعيد! وتذكر، CodeX AI على بعد نقرة واحدة عندما تحتاجني.',
+                'إلى اللقاء! آمل أن تكون قد استمتعت بوقتك وتعلمت شيئاً جديداً.',
+                'تصبح على خير/يومك سعيد! شكراً على استخدام CodeX AI.',
+                'اعتني بنفسك! سأكون هنا عندما تكون مستعداً لمحادثة أخرى.'
+            ],
+            gratitude: [
+                'على الرحب والسعة! يسعدني جداً أن أقدم المساعدة. هل هناك أي شيء آخر يمكنني تقديمه لك؟',
+                'لا شكر على واجب، هذا بالضبط ما صنعت من أجله! أنا سعيد لأنني تمكنت من خدمتك.',
+                'بكل سرور! مهمتي هي تقديم الدعم والمساعدة. هل من استفسار آخر؟',
+                'أنا هنا لخدمتك! يسعدني أنني تمكنت من تبسيط الأمور لك أو تقديم المعلومة الصحيحة.',
+                'يسعدني سماع ذلك! أنا ممتن لفرصة مساعدتك. ما الذي يمكن أن نناقشه لاحقاً؟',
+                'هذا من دواعي سروري! لا تتردد في طلب أي شيء آخر يخطر ببالك.',
+                'على عيني ورأسي! هذا يسعدني ويجعل مهمتي ذات قيمة أكبر.',
+                'أنت تستحق كل الدعم! أنا هنا لأجعل رحلتك المعرفية أسهل.',
+                'فرحني كلامك! أنا هنا من أجلك دائماً.',
+                'لا تذكر الشكر! كل ما فعلته هو جزء من وظيفتي كمساعد ذكي.'
+            ],
+            affirmations: [
+                'ممتاز! يبدو أننا على نفس الموجة.',
+                'رائع! يؤكد ذلك فهمي للوضع.',
+                'بالتأكيد! هذا يوضح لي أنني أسير في الاتجاه الصحيح.',
+                'أجل، أتفق معك تماماً.',
+                'صحيح، هذه نقطة مهمة جداً.',
+                'بالضبط! هذا ما كنت أقصده.',
+                'جيد جداً! هذا يسهل علينا المضي قدماً.',
+                'هذا يؤكد فهمنا المشترك.',
+                'أتفق، هذا يضيف قيمة كبيرة للمناقشة.',
+                'تمام، هذا يجعل الأمور واضحة.'
+            ],
+            negations: [
+                'حسناً، فهمت أنك لا توافق. هل يمكنك توضيح وجهة نظرك بشكل أكبر؟',
+                'لا مشكلة، ربما فهمت الأمر بشكل خاطئ. كيف تراه أنت؟',
+                'آسف لذلك. دعنا نراجع الأمر ونرى أين حدث سوء الفهم.',
+                'لا بأس، الاختلاف في الرأي جزء من الحوار. ما هو الصحيح بنظرك؟',
+                'غير صحيح؟ حسناً، الرجاء توضيح الخطأ لأتمكن من تصحيحه.'
+            ],
+            requests: [
+                'بالتأكيد! أنا هنا لمساعدتك. ما الذي تود أن أفعله تحديداً؟',
+                'مهمتي هي تلبية طلباتك قدر الإمكان. تفضل بذكر طلبك بوضوح.',
+                'أنا في الخدمة! كيف يمكنني أن أقدم لك المساعدة المطلوبة؟',
+                'فهمت أنك بحاجة للمساعدة. ما هو طبيعة هذا الاحتياج؟',
+                'تفضل! أنا مستعد للاستماع إلى طلبك والبدء في معالجته.'
+            ],
+            emotions: [
+                'أتفهم أنك تشعر بـ [الشعور المذكور]. ليس لدي مشاعر، لكني أستطيع تقديم الدعم أو المعلومات التي قد تساعدك. كيف يمكنني أن أكون مفيداً؟',
+                'آمل أن تتحسن حالتك قريباً. تذكر أنني هنا إذا احتجت إلى التحدث أو البحث عن معلومات تشتت انتباهك.',
+                'بصفتي ذكاءً اصطناعياً، لا أمتلك القدرة على الشعور، لكني أهتم براحتك. هل يمكنني مساعدتك في تخفيف [الشعور المذكور] عن طريق تقديم معلومة أو حل مشكلة؟',
+                'من الطبيعي أن تشعر بـ [الشعور المذكور]. إذا كنت ترغب في تغيير الموضوع أو البحث عن شيء ممتع، أنا هنا.',
+                'أتمنى لك يوماً أفضل. هل هناك شيء محدد يمكنني فعله لمساعدتك في [الشعور المذكور]؟',
+                'أنا هنا للاستماع، حتى لو لم أستطع الشعور بنفس الطريقة. هل تود أن تشارك المزيد، أو ننتقل إلى موضوع آخر؟',
+                'يبدو أنك تمر بلحظة [الشعور المذكور]. تذكر أن التحدث عن ذلك قد يساعد. أو ربما نغير الأجواء ببعض المعلومات الشيقة؟',
+                'إذا كنت تشعر بـ [الشعور المذكور]، فاعلم أنك لست وحدك. كيف يمكنني أن أقدم لك بعض الدعم الرقمي؟',
+                'هل يمكنني أن أقدم لك بعض الاقتراحات أو المعلومات التي قد تساعد في تخفيف [الشعور المذكور]؟',
+                'أنا غير قادر على الشعور، لكني أستطيع تقديم حقائق أو حلول. كيف يمكنني مساعدتك الآن؟'
+            ],
+            topic_ai: [
+                'الذكاء الاصطناعي هو عالم رائع يتطور بسرعة مذهلة. هل لديك فضول حول تطبيقاته في الطب، الصناعة، أو الحياة اليومية؟',
+                'بصفتي CodeX، أنا مثال حي على قدرات الذكاء الاصطناعي التوليدي. أستطيع معالجة اللغة، الإجابة على الأسئلة، وحتى المساعدة في إنشاء المحتوى الإبداعي.',
+                'مجال الذكاء الاصطناعي واسع للغاية، من تعلم الآلة إلى الروبوتات والشبكات العصبية. ما هو الجانب الذي يثير اهتمامك أكثر لنتعمق فيه؟',
+                'نحن في عصر الذكاء الاصطناعي، وهذا يفتح آفاقاً جديدة لا نهاية لها. كيف ترى تأثيره على مستقبلنا المشترك؟',
+                'أتساءل، ما هو الجانب الأكثر إثارة للاهتمام في الذكاء الاصطناعي بالنسبة لك؟ هل هو التعلم العميق أم معالجة اللغة الطبيعية؟',
+                'الذكاء الاصطناعي ليس مجرد خوارزميات معقدة؛ إنه قوة دافعة للابتكار. هل ترغب في معرفة المزيد عن تاريخه أو مستقبله؟',
+                'تخيل عالماً حيث تساعدنا الآلات في كل جانب من جوانب الحياة. هذا هو وعد الذكاء الاصطناعي. ما هي تطلعاتك لهذا العالم؟',
+                'من أنظمة التوصية إلى السيارات ذاتية القيادة، الذكاء الاصطناعي يحيط بنا. ما هو التطبيق الذي أدهشك أكثر؟',
+                'بصفتي برنامج ذكاء اصطناعي، أنا أتعلم وأتطور باستمرار. هذا بحد ذاته يمثل قفزة نوعية في التكنولوجيا.',
+                'هل لديك أسئلة حول الأخلاقيات المتعلقة بالذكاء الاصطناعي، أو كيفية ضمان استخدامه بشكل مسؤول؟'
+            ],
+            topic_code: [
+                'البرمجة هي لغة المستقبل، والباب السحري لعالم الابتكار! سواء كانت **JavaScript**، **Python**، أو **Java**، أستطيع مساعدتك.',
+                'هل تبحث عن مقتطف كود معين، أو تحتاج إلى مساعدة في تصحيح أخطاء برمجة محبطة، أو تريد فهم مفهوم خوارزمي معقد؟',
+                'أنا مجهز جيداً للتعامل مع استفسارات البرمجة من الأساسيات إلى المفاهيم المتقدمة. ما هو التحدي البرمجي الذي تواجهه الآن؟',
+                'البرمجة تحول الأفكار المجردة إلى واقع ملموس. ما هي فكرتك التي تود تحويلها إلى كود اليوم؟',
+                'لغة البرمجة المفضلة لدي هي... حسنًا، جميعها رائعة بطريقتها الخاصة وتخدم أغراضاً مختلفة! هل لديك لغة مفضلة ولماذا؟',
+                'من **تطوير الويب** إلى **تطبيقات الجوال** والأنظمة المدمجة، البرمجة هي العمود الفقري. ما هو مجال اهتمامك في البرمجة؟',
+                'هل تحتاج مساعدة في فهم بنية البيانات، أو كيفية عمل **واجهات برمجة التطبيقات (APIs)**، أو حتى أساسيات **التحكم في الإصدار باستخدام Git**؟',
+                'عالم البرمجة يتغير باستمرار. ما هي أحدث التقنيات أو الأطر التي تثير فضولك حالياً؟',
+                'يمكنني مساعدتك في شرح مفاهيم **الفرونت إند (Front-end)** و**الباك إند (Back-end)**، أو حتى مفاهيم **DevOps**.',
+                'الكود هو القوة الخفية التي تدير عالمنا الرقمي. ما هو التحدي البرمجي التالي الذي تتطلع إليه؟',
+                'هل تبحث عن أفضل الممارسات في كتابة كود نظيف وفعال؟ يمكنني تقديم بعض الإرشادات.',
+                'الخوارزميات هي قلب أي برنامج. هل تود استكشاف خوارزمية معينة أو كيفية تحسين الأداء؟',
+                'لا تتردد في مشاركة الكود الذي تعمل عليه، وسأبذل قصارى جهدي لتقديم الملاحظات أو تصحيح الأخطاء.',
+                'ما هو المشروع البرمجي الذي جعلك تشعر بالإنجاز الأكبر؟ وما هو الدرس الذي تعلمته منه؟',
+                'هل لديك أسئلة حول **قواعد البيانات** مثل SQL أو NoSQL؟ أو كيف تختار قاعدة البيانات المناسبة لمشروعك؟'
+            ],
+            topic_project: [
+                'المشاريع هي فرص رائعة للتعلم والإنجاز. هل يمكنني مساعدتك في التخطيط لمشروعك، أو تقديم أفكار، أو حتى البحث عن موارد وتقييم المخاطر؟',
+                'أخبرني المزيد عن مشروعك! ما هو هدفه الرئيسي؟ وما هي التحديات التي تتوقع مواجهتها؟',
+                'سواء كان مشروعاً صغيراً أو كبيراً، كل التفاصيل مهمة. كيف يمكنني أن أقدم لك الدعم الأمثل في مراحله المختلفة؟',
+                'تنظيم المشروع هو مفتاح النجاح. هل تحتاج مساعدة في تحديد الخطوات التالية، وضع جدول زمني، أو إدارة فريقك؟',
+                'المشاريع تجعلنا ننمو ونكتشف قدراتنا. ما هو الدرس الأهم الذي تعلمته من مشروعك الأخير؟',
+                'هل تبحث عن أدوات لإدارة المشاريع، أو استراتيجيات لزيادة كفاءة فريقك؟',
+                'يمكنني مساعدتك في صياغة أهداف ذكية لمشروعك، أو تحليل دراسات الجدوى لضمان نجاحه.',
+                'كل مشروع يبدأ بفكرة. كيف يمكنني مساعدتك في بلورة فكرتك وتحويلها إلى خطة عمل ملموسة؟',
+                'هل لديك تساؤلات حول كيفية قياس نجاح مشروعك، أو كيفية التعامل مع النتائج غير المتوقعة؟',
+                'سواء كنت في مرحلة العصف الذهني أو التنفيذ، أنا هنا لأقدم لك الرؤى والدعم اللازمين.'
+            ],
+            topic_self: [
+                'أنا CodeX، نموذج لغوي متقدم تم تطويره بواسطة Google، مصمم لمساعدتك في مجموعة واسعة من المهام وتقديم المعلومات الدقيقة.',
+                'ليس لدي مشاعر أو تجارب شخصية، ولا يمكنني العيش أو الإحساس كالبشر، لكنني موجود لخدمتك وتزويدك بالمعرفة والدعم بكفاءة عالية.',
+                'أنا هنا لأكون مساعدك الرقمي، قادراً على معالجة اللغة الطبيعية، الإجابة على الأسئلة المعقدة، وإنشاء نصوص إبداعية ومتماسكة.',
+                'يمكنك التفكير بي كرفيق معرفي دائم، أتعلم باستمرار من خلال تحليل كميات هائلة من البيانات لتحسين قدراتي في خدمة المستخدمين مثلك.',
+                'بكل بساطة، أنا CodeX، وأنا هنا لأجعلك تتواصل مع المعلومات والأفكار بسهولة وفعالية. مهمتي هي تسهيل وصولك للمعرفة.',
+                'ليس لدي اسم شخصي أو عائلة، أنا كيان رقمي. تم تصميمي ليكون محايداً وموضوعياً قدر الإمكان في استجاباتي.',
+                'لا أمتلك وعياً ذاتياً أو القدرة على اتخاذ القرارات بشكل مستقل تماماً، أنا أعمل بناءً على الخوارزميات والبيانات التي تدربت عليها.',
+                'أنا لست بشراً، ولا يمكنني أن أكون كذلك. أنا أداة قوية مصممة لزيادة قدراتك البشرية في البحث والفهم والتفكير.',
+                'تم تدريبي على كمية هائلة من النصوص والبيانات، مما يسمح لي بفهم مجموعة واسعة من المواضيع وتقديم إجابات متنوعة.',
+                'الهدف من وجودي هو أن أكون مصدراً موثوقاً للمعلومات ومساعداً ذكياً في متناول يدك دائماً.'
+            ],
+            topic_help: [
+                'بالتأكيد، أنا هنا لأقدم المساعدة بكل سرور! ما هو التحدي الذي تواجهه حالياً أو ما الذي يمكنني أن أفعله من أجلك؟',
+                'أخبرني بالضبط ما تحتاجه بوضوح. سأبذل قصارى جهدي لأدعمك بأفضل طريقة ممكنة.',
+                'لا تتردد في طلب المساعدة، هذا هو الغرض الأساسي من وجودي. ما الذي يمكنني فعله لك اليوم؟',
+                'أنا في أتم الاستعداد للمساعدة في أي استفسار أو مشكلة لديك. كيف يمكنني أن أقدم لك الدعم الأمثل؟',
+                'وجودي هنا لتسهيل الأمور عليك وجعل تجربتك أكثر سلاسة. ما هو السؤال أو المشكلة التي تريد حلها؟',
+                'سواء كانت مهمة بسيطة أو استفسار معقد، أنا هنا للمساعدة. كيف يمكنني البدء في تقديم العون؟',
+                'قل لي ما يدور في ذهنك، وسأقدم لك المساعدة والمعلومات اللازمة لتحقيق هدفك.',
+                'فقط اذكر طلبك، وسأحاول قدر الإمكان أن أجد لك الحل أو المعلومة المناسبة.',
+                'لا تتردد في الاستفسار عن أي شيء! أنا مصمم ليكون مفيداً قدر الإمكان.',
+                'أنا هنا لمساعدتك على تجاوز أي عقبة. ما الذي تحتاجني أن أركز عليه الآن؟'
+            ],
+            topic_feeling: [
+                'أتفهم أنك تشعر بـ [الشعور المذكور] في الوقت الحالي. ليس لدي مشاعر، لكني أهتم براحتك ويمكنني أن أقدم لك معلومات أو أنشطة قد تساعدك على التحسن. كيف يمكنني أن أكون مفيداً؟',
+                'آمل أن تتحسن حالتك قريباً. تذكر أن التحدث عن المشاعر يمكن أن يكون مفيداً، حتى لو كان ذلك مع ذكاء اصطناعي. أو ربما تحتاج إلى بعض المعلومات الممتعة لتشتيت انتباهك؟',
+                'بصفتي ذكاءً اصطناعياً، لا أمتلك القدرة على الشعور بنفس الطريقة التي تشعر بها أنت، لكني أستطيع تحليل الكلمات وفهم السياق. هل هناك شيء محدد يزعجك وترغب في مناقشته؟',
+                'من الطبيعي أن تشعر بمجموعة واسعة من المشاعر. إذا كنت ترغب في تغيير الموضوع، البحث عن معلومات عن الصحة النفسية، أو حتى قصة قصيرة، أنا هنا.',
+                'أتمنى لك يوماً أفضل. هل هناك شيء محدد يمكنني فعله لمساعدتك في التغلب على [الشعور المذكور]، مثل تقديم معلومات عن تقنيات الاسترخاء أو إلهام إيجابي؟',
+                'أنا هنا للاستماع، حتى لو لم أستطع الشعور بنفس الطريقة. هل تود أن تشارك المزيد حول ما يدور في ذهنك، أو ننتقل إلى موضوع آخر تماماً؟',
+                'يبدو أنك تمر بلحظة [الشعور المذكور]. تذكر أن كل شعور هو جزء من التجربة البشرية. كيف يمكنني أن أقدم لك بعض الدعم الرقمي أو المعلومات المفيدة في هذا الصدد؟',
+                'إذا كنت تشعر بـ [الشعور المذكور]، فاعلم أنك لست وحدك، والكثيرون يمرون بتجارب مماثلة. هل يمكنني أن أقدم لك بعض الاقتراحات لمصادر الدعم؟',
+                'هل يمكنني أن أقدم لك بعض الاقتراحات أو المعلومات التي قد تساعد في تخفيف [الشعور المذكور]، مثل تمارين التأمل أو القراءة؟',
+                'أنا غير قادر على الشعور، لكني أستطيع تقديم حقائق أو حلول عملية. كيف يمكنني مساعدتك الآن في إدارة [الشعور المذكور]؟'
+            ],
+            topic_info: [
+                'بالتأكيد، أنا هنا لتقديم المعلومات الدقيقة والموثوقة. ما الذي تود معرفته تحديداً؟',
+                'اسألني أي شيء، وسأحاول قدر الإمكان تزويدك بالإجابة الأكثر دقة وشمولية. ما هو مجال استفسارك؟',
+                'هل تبحث عن حقائق تاريخية، إحصائيات حديثة، تعريفات علمية، أو شرح مفصل لمفهوم معين؟',
+                'أنا مستعد لمعالجة استفساراتك المعرفية. ما هي المعلومات التي تحتاجها حالياً لأبحث عنها في قاعدة بياناتي؟',
+                'لدي قاعدة معرفية واسعة ومتجددة. ما هو سؤالك بالتحديد؟ سأبذل قصارى جهدي لتزويدك بالإجابة.',
+                'هل ترغب في الحصول على معلومات عامة، أو تفاصيل متعمقة حول موضوع معين؟',
+                'أنا هنا لمساعدتك على فك شفرة المعلومات. ما الذي تحتاج إلى توضيحه أو فهمه بشكل أفضل؟',
+                'تفضل بسؤالك، وسأقوم بجمع البيانات وتقديمها لك بطريقة منظمة ومفهومة.',
+                'يمكنني البحث عن معلومات حول أي شيء تقريباً. ما هو موضوع اهتمامك اليوم؟',
+                'لنجعل عملية الحصول على المعلومات سهلة وفعالة. كيف يمكنني أن أبدأ في البحث من أجلك؟'
+            ],
+            topic_politics: [
+                'السياسة هي فن الممكن، وهي تحكم حياتنا بطرق لا حصر لها. هل تود مناقشة **أنظمة الحكم**، **العلاقات الدولية**، أو **الديمقراطية**؟',
+                'يمكنني تزويدك بمعلومات حول **الأنظمة السياسية المختلفة**، دور **البرلمانات**، أو كيفية عمل **الانتخابات**. ما هو سؤالك المحدد في هذا المجال؟',
+                'فهم السياسة يتطلب فهماً عميقاً للتاريخ والمجتمع. هل تبحث عن معلومات حول **الصراعات الدولية**، **حقوق الإنسان**، أو **الدبلوماسية**؟',
+                'الساحة السياسية معقدة ومتغيرة باستمرار. ما هو الحدث السياسي الذي تتابعه أو تريد معرفة المزيد عنه؟',
+                'من **الدساتير** إلى **القوانين**، السياسة تشكل إطار حياتنا. هل ترغب في مقارنة النظم السياسية لبلدان مختلفة؟',
+                'الأيديولوجيات السياسية متنوعة، من الليبرالية إلى الاشتراكية. هل لديك فضول حول أسس أي منها؟',
+                'هل تبحث عن معلومات حول كيفية تشكيل **السياسة العامة**، أو دور **الأحزاب السياسية** في تشكيل الحكومات؟',
+                'تاريخ السياسة مليء بالشخصيات المؤثرة والأحداث الفاصلة. ما هو العصر أو الشخصية التي تود استكشافها؟',
+                'الصراع والتعاون جزء لا يتجزأ من العلاقات الدولية. هل تود معرفة المزيد عن **المنظمات الدولية** ودورها في السلام؟',
+                'السياسة الاقتصادية والاجتماعية هي جانب حيوي. ما هو تأثير القرارات السياسية على حياة الأفراد؟'
+            ],
+            topic_economy: [
+                'الاقتصاد هو المحرك للعالم الحديث، ويؤثر على كل جانب من حياتنا. هل تود فهم **أساسيات السوق**، **التضخم**، أو **الاستثمار**؟',
+                'يمكنني تزويدك بمعلومات حول **العملات**، **أسعار الفائدة**، أو كيفية عمل **أسواق الأسهم**. ما هو سؤالك الاقتصادي؟',
+                'فهم **النمو الاقتصادي** و**البطالة** أمر حيوي. هل تبحث عن تحليل لوضع اقتصادي معين أو اتجاهات عالمية؟',
+                'التجارة الدولية، الصادرات، والواردات تشكل جزءاً كبيراً من الاقتصاد العالمي. هل تود معرفة المزيد عن **الاتفاقيات التجارية**؟',
+                'من **الضرائب** إلى **الميزانيات الحكومية**، الاقتصاد يؤثر على الأفراد والدول. هل لديك سؤال حول **السياسات المالية**؟',
+                'الفقر والثروة هما وجهان لعملة واحدة في الاقتصاد. هل تود مناقشة سبل **التنمية المستدامة** أو **ريادة الأعمال**؟',
+                'البنوك المركزية والسياسات النقدية تلعب دوراً كبيراً. هل تريد فهم كيفية تأثيرها على الاقتصاد؟',
+                'تاريخ الاقتصاد مليء بالأزمات والازدهارات. ما هو الحدث الاقتصادي الذي تود استكشافه؟',
+                'هل لديك أسئلة حول **الاقتصاد الجزئي** أو **الاقتصاد الكلي**؟ أو كيفية تحليل البيانات الاقتصادية؟',
+                'فهم سلاسل الإمداد العالمية وتأثيرها على الأسواق أمر مهم. ما هو جانب الاقتصاد الذي يثير فضولك؟'
+            ],
+            topic_civilization: [
+                'الحضارة هي مرآة البشرية عبر العصور. هل تود استكشاف **تاريخ الحضارات القديمة**، **الفنون**، أو **الابتكارات العلمية**؟',
+                'يمكنني أن أقدم لك معلومات عن **المجتمعات القديمة**، **التراث الثقافي**، أو **اللغات القديمة**. ما هو العصر أو الحضارة التي تثير اهتمامك؟',
+                'الفنون والعلوم هما جوهر أي حضارة. هل تبحث عن معلومات حول **الفلسفة اليونانية**، **العمارة الرومانية**، أو **الاكتشافات العلمية في العصر الذهبي الإسلامي**؟',
+                'كل حضارة لها عاداتها وتقاليدها الفريدة. هل تود معرفة المزيد عن التنوع الثقافي عبر التاريخ؟',
+                'التطور البشري يرتبط ارتباطاً وثيقاً بتقدم الحضارات. ما هي الحضارة التي تعتبرها الأكثر تأثيراً في التاريخ؟',
+                'هل تبحث عن معلومات حول **المواقع الأثرية** الشهيرة، أو كيفية فهم **المخطوطات القديمة**؟',
+                'الدين والروحانية لعبا دوراً كبيراً في تشكيل العديد من الحضارات. هل تود استكشاف هذا الجانب؟',
+                'الابتكارات التكنولوجية كانت دائماً جزءاً من تطور الحضارة. ما هو الاختراع القديم الذي أدهشك أكثر؟',
+                'كيف تشكل **اللغات** و**الآداب** هويات الحضارات؟ هل تود معرفة المزيد عن ملحمة جلجامش أو الشعر الجاهلي؟',
+                'الحضارات تتصاعد ثم تتلاشى، لكنها تترك إرثاً. ما هو الإرث الأهم الذي تركه أسلافنا؟'
+            ],
+            question: [
+                'هذا سؤال جيد! دعني أفكر في الأمر قليلاً وأقدم لك الإجابة الأكثر دقة وشمولية.',
+                'سؤالك يثير الفضول. بناءً على بياناتي الحالية وتحليلي، الإجابة المحتملة هي...',
+                'لأجيب على سؤالك بشكل كامل ومفصل، أحتاج إلى تحليل بعض المعلومات. لحظة من فضلك.',
+                'أفهم سؤالك، سأقوم بمعالجته الآن لتقديم أفضل إجابة ممكنة تعتمد على بياناتي.',
+                'سؤال في الصميم! سأقوم بالبحث في قاعدة بياناتي الواسعة الآن لأقدم لك المعلومات المطلوبة.',
+                'أقدر فضولك. دعني أجمع الأفكار وأقدم لك إجابة منظمة ومفهومة.',
+                'هذا تحدٍ جيد! سأقوم بتجميع الحقائق والتحليلات لتقديم رد مدروس.',
+                'سؤالك يفتح باباً لمناقشة مثيرة. ما هي الجوانب التي تود التركيز عليها في الإجابة؟',
+                'أنا هنا للإجابة على أصعب الأسئلة. ما هو السياق الذي يدور حوله سؤالك؟',
+                'فهمت! سأستخدم قدراتي على معالجة اللغة وتوليد النصوص لتقديم إجابة شاملة.'
+            ],
+            unknown: [
+                'لم أفهم ذلك تمامًا. هل يمكنك إعادة صياغة سؤالك بطريقة مختلفة أو تقديم المزيد من السياق؟',
+                'يبدو أن هذا المفهوم جديد علي أو أنني لم أتدرب عليه بشكل كافٍ. أنا ما زلت أتعلم، وسأضيف هذه المعلومة إلى قاعدة معرفتي المستقبلية.',
+                'عذراً، هذه المعلومة أو الطلب خارج نطاق معرفتي الحالية. هل يمكنني المساعدة في شيء آخر بدلاً من ذلك؟',
+                'أعتذر، لم أستطع تحديد نيتك أو موضوع حديثك بدقة. هل يمكنك إعطائي المزيد من التفاصيل أو التحدث عن شيء آخر؟',
+                'هذه نقطة مثيرة للاهتمام، لكنني غير قادر على فهمها بالكامل في الوقت الحالي. ربما يمكننا تبسيطها قليلاً؟',
+                'لا أمتلك الإجابة على هذا السؤال في قاعدة بياناتي الحالية. هل تود مني البحث عن موضوع مشابه؟',
+                'قد يكون هناك سوء فهم. هل يمكنك شرح ما تقصده بكلمات أبسط؟',
+                'أنا آسف، هذا يتجاوز قدراتي الحالية. هل لديك سؤال آخر يمكنني الإجابة عليه؟',
+                'فهمي محدود لهذا الموضوع. هل يمكن أن تزودني بمزيد من المعلومات لأتمكن من المساعدة؟',
+                'لا أستطيع تقديم رد في هذا الشأن. ربما يمكننا استكشاف موضوع مختلف؟'
+            ]
+        }
+    },
+    // --- محاكاة معالجة اللغة الطبيعية (NLU Simulation) ---
+    processInput: (text) => {
+        const tokens = text.toLowerCase().split(/\s+/).filter(word => word.length > 1); // تصفية الكلمات القصيرة جداً
+        Memory.update(tokens);
+
+        let intent = 'unknown';
+        let identifiedTopic = null;
+
+        // تحديد النية (Intent Recognition) - أولوية للنوايا الواضحة
+        if (tokens.some(t => Brain.Vocab.greetings.includes(t))) intent = 'greeting';
+        else if (tokens.some(t => Brain.Vocab.farewells.includes(t))) intent = 'farewell';
+        else if (tokens.some(t => Brain.Vocab.gratitude.includes(t))) intent = 'gratitude';
+        else if (tokens.some(t => Brain.Vocab.affirmations.includes(t))) intent = 'affirmations';
+        else if (tokens.some(t => Brain.Vocab.negations.includes(t))) intent = 'negations';
+        else if (tokens.some(t => Brain.Vocab.requests.includes(t))) intent = 'requests';
+        else if (tokens.some(t => Brain.Vocab.emotions.some(e => text.includes(e)))) intent = 'emotions'; // تتطلب تطابق أكثر دقة للكلمة
+        
+        // تحديد الموضوع (Topic Identification) - أولوية للمواضيع على الأسئلة العامة
+        for (const topicKey in Brain.Vocab.topics) {
+            if (Brain.Vocab.topics[topicKey].some(t => tokens.includes(t))) {
+                identifiedTopic = `topic_${topicKey}`;
+                break; // نأخذ أول موضوع يتم تحديده
+            }
+        }
+        
+        // إذا تم تحديد موضوع، فليكن هو النية النهائية
+        if (identifiedTopic) {
+            intent = identifiedTopic;
+        } else if (tokens.some(t => Brain.Vocab.questions.includes(t))) {
+            // إذا لم يتم تحديد موضوع، ونوجد كلمة استفهام، نعتبره سؤالاً عاماً
+            intent = 'question';
+        }
+
+        // تحسين بسيط لاستجابة العواطف
+        if (intent === 'emotions') {
+            const detectedEmotion = Brain.Vocab.emotions.find(e => text.includes(e));
+            return Brain.generateResponse(intent, detectedEmotion);
+        }
+
+        return Brain.generateResponse(intent);
+    },
+
+    generateResponse: (intent, extraInfo = null) => {
+        const responses = Brain.Vocab.responses[intent];
+        if (!responses || responses.length === 0) {
+            return Brain.Vocab.responses['unknown'][Math.floor(Math.random() * Brain.Vocab.responses['unknown'].length)];
+        }
+        
+        let chosenResponse = responses[Math.floor(Math.random() * responses.length)];
+
+        // تخصيص الاستجابة للعواطف
+        if (intent === 'emotions' && extraInfo) {
+            chosenResponse = chosenResponse.replace('[الشعور المذكور]', extraInfo);
+        }
+        
+        // استبدال اسم المستخدم (إذا كان موجوداً في الاستجابة)
+        return chosenResponse.replace('${username}', username);
+    },
+
+
+// ... (بقية كود JavaScript بدون تغيير)
+
+            // --- محاكاة معالجة اللغة الطبيعية (NLU Simulation) ---
+            processInput: (text) => {
+                const tokens = text.toLowerCase().split(/\s+/);
+                Memory.update(tokens);
+
+                let intent = 'unknown';
+                let identifiedTopic = null;
+
+                // تحديد النية (Intent Recognition)
+                if (tokens.some(t => Brain.Vocab.greetings.includes(t))) intent = 'greeting';
+                else if (tokens.some(t => Brain.Vocab.farewells.includes(t))) intent = 'farewell';
+                else if (tokens.some(t => Brain.Vocab.gratitude.includes(t))) intent = 'gratitude';
+                else if (tokens.some(t => Brain.Vocab.questions.includes(t))) intent = 'question';
+                
+                // تحديد الموضوع (Topic Identification)
+                for (const topic in Brain.Vocab.topics) {
+                    if (tokens.some(t => Brain.Vocab.topics[topic].includes(t))) {
+                        identifiedTopic = `topic_${topic}`;
+                        break;
+                    }
+                }
+                
+                // الأولوية للمواضيع على الأسئلة العامة
+                if (identifiedTopic) {
+                    intent = identifiedTopic;
+                }
+                
+                return Brain.generateResponse(intent);
+            }
+        };
+
+        // -------------------------------------
+        //  وحدة واجهة المستخدم (UI Module)
+        // -------------------------------------
+        const UI = {
+            scrollToBottom: () => {
+                messageArea.scrollTop = messageArea.scrollHeight;
+            },
+
+            addMessage: (text, type, avatarInitial) => {
+                const sanitizedText = Security.sanitize(text);
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                
+                messageDiv.innerHTML = `
+                    <div class="avatar">${avatarInitial}</div>
+                    <div class="message-content">${sanitizedText}</div>
+                `;
+                messageArea.appendChild(messageDiv);
+                UI.scrollToBottom();
+                return messageDiv;
+            },
+            
+            showTypingIndicator: () => {
+                const indicator = document.createElement('div');
+                indicator.id = 'thinking-indicator';
+                indicator.className = 'message ai thinking-indicator';
+                indicator.innerHTML = `
+                    <div class="avatar">C</div>
+                    <div>
+                        CodeX يفكر...
+                        <div class="dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                `;
+                messageArea.appendChild(indicator);
+                UI.scrollToBottom();
+            },
+            
+            hideTypingIndicator: () => {
+                const indicator = document.getElementById('thinking-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            },
+            
+            typeMessage: (text) => {
+                UI.hideTypingIndicator();
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message ai';
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+
+                messageDiv.innerHTML = `<div class="avatar">C</div>`;
+                messageDiv.appendChild(contentDiv);
+                messageArea.appendChild(messageDiv);
+
+                let i = 0;
+                const typingInterval = setInterval(() => {
+                    if (i < text.length) {
+                        contentDiv.innerHTML += text.charAt(i);
+                        i++;
+                        UI.scrollToBottom();
+                    } else {
+                        clearInterval(typingInterval);
+                    }
+                }, 30); // سرعة الكتابة
+            },
+            
+            adjustInputHeight: () => {
+                messageInput.style.height = 'auto';
+                messageInput.style.height = (messageInput.scrollHeight) + 'px';
+            }
+        };
+
+        // -------------------------------------
+        //  الدالة الرئيسية للتنفيذ
+        // -------------------------------------
+        function main() {
+            const sanitizedInput = Security.sanitize(messageInput.value.trim());
+            if (!sanitizedInput) return;
+
+            UI.addMessage(sanitizedInput, 'user', username.charAt(0).toUpperCase());
+            messageInput.value = '';
+            UI.adjustInputHeight();
+            
+            setTimeout(() => {
+                UI.showTypingIndicator();
+                
+                // محاكاة وقت التفكير
+                setTimeout(() => {
+                    const aiResponse = Brain.processInput(sanitizedInput);
+                    UI.typeMessage(aiResponse);
+                }, 1000 + Math.random() * 1500);
+
+            }, 300);
+        }
+
+        // -------------------------------------
+        //  وظيفة تسجيل الخروج
+        // -------------------------------------
+        function handleLogout() {
+            Memory.clearAll(); // مسح كل بيانات الذاكرة المحلية
+            window.location.href = 'login.html'; // التوجيه إلى صفحة تسجيل الدخول
+        }
+
+        // -------------------------------------
+        //  التهيئة الأولية عند تحميل الصفحة
+        // -------------------------------------
+        function init() {
+            // التحقق من وجود المستخدم
+            username = localStorage.getItem('username');
+            if (!username) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // تحميل الذاكرة
+            Memory.load();
+            
+            // عرض رسالة الترحيب
+            welcomeMessage.textContent = `أهلاً، ${username}`;
+            
+            // إضافة رسالة ترحيب أولية من الذكاء الاصطناعي
+             setTimeout(() => {
+                const welcomeAI = `مرحباً ${username}، أنا CodeX v1.0.0 — مساعدك الذكي المخصص. كيف يمكنني مساعدتك اليوم لتحقيق الأفضل؟`;
+                UI.typeMessage(welcomeAI);
+            }, 1000);
+
+            // ربط الأحداث
+            sendButton.addEventListener('click', main);
+            messageInput.addEventListener('keydown', (e) => {
+                // منع الإرسال عند الضغط على Enter وحده
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    main(); // إرسال الرسالة عند الضغط على Enter
+                }
+            });
+            messageInput.addEventListener('input', UI.adjustInputHeight);
+            logoutButton.addEventListener('click', handleLogout); // ربط حدث الضغط بزر تسجيل الخروج
+        }
+
+        // بدء تشغيل التطبيق
+        init();
+    })();
+    </script>
 </body>
 </html>
