@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - CodeX AI</title>
+    <title>CodeX AI - تسجيل الدخول</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* --- الإعدادات الأساسية والخطوط --- */
-        /* Basic settings and fonts */
         :root {
             --dark-blue: #0d1b2a;
             --mid-blue: #1b263b;
             --light-blue: #415a77;
+            --accent-blue: #007bff; /* لون مميز للأزرار والإبرازات */
             --silver-text: #E0E0E0;
             --white-glow: #ffffff;
+            --card-background: rgba(27, 38, 59, 0.7); /* شفافية أكبر قليلاً للبطاقات */
         }
 
         * {
@@ -25,20 +26,17 @@
         }
 
         html, body {
-            height: 100%;
-            font-family: 'Tajawal', sans-serif; /* خط عربي مناسب */
-            overflow: hidden; /* إخفاء شريط التمرير الناتج عن الخلفية المتحركة */
-        }
-
-        /* --- خلفية الموجة المتحركة --- */
-        /* Animated Wave Background */
-        body {
+            min-height: 100%; /* استخدام min-height لضمان أن المحتوى يمكن أن يمد طول الصفحة */
+            font-family: 'Tajawal', sans-serif, 'Montserrat'; /* تفضيل الخط العربي */
+            overflow-x: hidden; /* منع شريط التمرير الأفقي */
+            color: var(--silver-text);
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column; /* يسمح بتراص المحتوى عمودياً */
+            align-items: center; /* توسيط المحتوى أفقياً */
             background: linear-gradient(315deg, var(--dark-blue) 25%, var(--mid-blue) 50%, var(--light-blue) 75%, var(--dark-blue) 100%);
             background-size: 400% 400%;
             animation: waveAnimation 15s ease infinite;
+            padding-bottom: 50px; /* مسافة في الأسفل */
         }
 
         @keyframes waveAnimation {
@@ -47,58 +45,62 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- الحاوية الرئيسية --- */
-        /* Main Container */
+        /* --- حاوية تسجيل الدخول الرئيسية (النمط الأصلي) --- */
         .login-container {
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 3rem; /* زيادة المسافة الداخلية لمزيد من المساحة */
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2rem; /* مسافة بين الشعار والنموذج */
+            gap: 2.5rem; /* زيادة المسافة بين الشعار والنموذج */
+            position: relative;
+            z-index: 1; /* يضمن أنه فوق الخلفية المتحركة */
+            margin-top: 15vh; /* دفعه للأسفل من الأعلى أكثر */
+            margin-bottom: 6rem; /* مسافة أكبر أسفل حاوية تسجيل الدخول */
+            background-color: var(--card-background); /* إضافة خلفية للوضوح */
+            backdrop-filter: blur(5px); /* إضافة تأثير التمويه للاتساق */
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%; /* يشغل مساحة أكبر على الشاشات الكبيرة */
+            max-width: 400px; /* أقصى عرض لمنعه من أن يصبح واسعاً جداً */
         }
 
         /* --- تصميم الشعار --- */
-        /* Logo Design */
         .logo {
-            font-size: 3rem; /* حجم معتدل */
+            font-size: 3.5rem; /* شعار أكبر */
             font-weight: 700;
-            letter-spacing: 2px;
-            
-            /* تأثير اللون الفضي المعدني باستخدام التدرج */
-            /* Silver metallic effect using gradient */
+            letter-spacing: 3px; /* تباعد أكثر وضوحاً */
             background: linear-gradient(145deg, #ffffff, #a9a9a9, #E0E0E0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            
-            /* ظل خفيف لإبراز النص */
-            /* Subtle shadow to highlight the text */
-            text-shadow: 0 0 10px rgba(224, 224, 224, 0.2), 0 0 20px rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 12px rgba(224, 224, 224, 0.3), 0 0 25px rgba(255, 255, 255, 0.15);
         }
 
-        /* --- تصميم نموذج تسجيل الدخول --- */
-        /* Login Form Design */
+        /* --- تصميم نموذج تسجيل الدخول (الأصلي) --- */
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.8rem; /* زيادة المسافة */
             width: 100%;
-            max-width: 320px;
+            max-width: 350px; /* أقصى عرض لعناصر النموذج داخل الحاوية */
         }
 
         .input-field {
             width: 100%;
-            padding: 1rem;
+            padding: 1.1rem; /* مسافة داخلية أكبر قليلاً */
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            background-color: rgba(27, 38, 59, 0.6); /* خلفية شبه شفافة */
-            backdrop-filter: blur(5px); /* تأثير ضبابي للخلفية */
+            background-color: rgba(27, 38, 59, 0.6);
+            backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             color: var(--silver-text);
-            font-size: 1rem;
+            font-size: 1.05rem; /* خط أكبر قليلاً */
             font-family: 'Tajawal', sans-serif;
             transition: all 0.3s ease;
+            text-align: right; /* محاذاة النص لليمين للغة العربية */
         }
 
         .input-field::placeholder {
@@ -108,113 +110,441 @@
         .input-field:focus {
             outline: none;
             border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 15px rgba(65, 90, 119, 0.5);
+            box-shadow: 0 0 18px rgba(65, 90, 119, 0.6); /* توهج أكثر وضوحاً */
         }
 
         .login-button {
-            padding: 1rem;
+            padding: 1.1rem; /* مسافة داخلية أكبر قليلاً */
             border: none;
             border-radius: 8px;
             background-color: var(--light-blue);
             color: var(--white-glow);
-            font-size: 1.1rem;
+            font-size: 1.15rem; /* خط أكبر قليلاً */
             font-weight: 700;
             font-family: 'Tajawal', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); /* ظل أكثر وضوحاً */
         }
 
         .login-button:hover {
             background-color: #5a7a9e;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* تأثير تحويم محسّن */
+            transform: translateY(-3px);
         }
 
         .login-button:active {
             transform: translateY(0);
         }
 
-        /* --- تصميم متجاوب --- */
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            .logo {
+        /* --- أقسام المحتوى الإضافية (أسفل تسجيل الدخول) --- */
+        .content-section {
+            width: 90%; /* استخدام العرض الكامل على الشاشات الكبيرة */
+            max-width: 1200px; /* أقصى عرض لمنع المحتوى من التمدد كثيراً */
+            margin: 4rem auto; /* مسافة بين الأقسام وتوسيطها */
+            padding: 3.5rem; /* زيادة المسافة الداخلية لإحساس أكثر اتساعاً */
+            background-color: var(--card-background);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .content-section h2 {
+            font-size: 2.8rem; /* عناوين أكبر */
+            color: var(--white-glow);
+            margin-bottom: 2.5rem; /* مسافة أكبر أسفل العنوان */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+        }
+
+        /* --- قسم الميزات --- */
+        .feature-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* عرض أدنى أكبر للبطاقات */
+            gap: 2rem; /* زيادة المسافة */
+            text-align: right; /* محاذاة النص لليمين للميزات */
+        }
+
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05); /* خلفية أفتح للبطاقات الفردية */
+            border-radius: 12px; /* نصف قطر حدود أكبر قليلاً */
+            padding: 2rem; /* زيادة المسافة الداخلية */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08); /* حدود أكثر وضوحاً قليلاً */
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px); /* رفع أكثر وضوحاً */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-blue); /* إبراز الحدود عند التحويم */
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem; /* حجم خط أكبر */
+            color: var(--white-glow);
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-card p {
+            font-size: 1.05rem; /* حجم خط أكبر قليلاً */
+            line-height: 1.6;
+            color: var(--silver-text);
+        }
+
+        /* --- قسم المؤسس --- */
+        .founder-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            max-width: 650px; /* بطاقة أوسع */
+            margin: 0 auto; /* توسيط البطاقة */
+            padding: 3rem; /* مسافة داخلية أكبر */
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .founder-card img {
+            width: 180px; /* صورة أكبر */
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent-blue); /* حدود أسمك */
+            margin-bottom: 2rem; /* مسافة أكبر أسفل الصورة */
+            box-shadow: 0 0 25px rgba(0, 123, 255, 0.5); /* توهج أكثر وضوحاً */
+        }
+
+        .founder-card h3 {
+            font-size: 2.2rem; /* عنوان أكبر */
+            color: var(--white-glow);
+            margin-bottom: 0.8rem;
+        }
+
+        .founder-card p {
+            font-size: 1.15rem; /* نص أكبر */
+            line-height: 1.7;
+            color: var(--silver-text);
+        }
+
+        /* --- أقسام النص العادي (بدون خلفية بطاقة) --- */
+        .plain-text-section {
+            width: 90%; /* استخدام العرض الكامل على الشاشات الكبيرة */
+            max-width: 1000px; /* أقصى عرض لمنع المحتوى من التمدد كثيراً */
+            margin: 6rem auto 3rem auto; /* مسافة أكبر في الأعلى والأسفل */
+            text-align: center;
+            position: relative;
+            z-index: 1; /* يضمن أن النص فوق أمواج الخلفية */
+        }
+
+        .plain-text-section h2 {
+            font-size: 2.8rem; /* عناوين أكبر */
+            color: var(--white-glow);
+            margin-bottom: 2rem; /* مسافة أكبر أسفل العنوان */
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+        }
+
+        .plain-text-section p {
+            font-size: 1.25rem; /* نص أكبر */
+            line-height: 1.8;
+            color: var(--silver-text);
+        }
+
+        /* --- حقوق النشر --- */
+        .copyright {
+            font-size: 1rem; /* نص حقوق النشر أكبر قليلاً */
+            color: rgba(224, 224, 224, 0.7);
+            margin-top: 5rem; /* مسافة أكبر فوق حقوق النشر */
+            text-align: center;
+            width: 100%; /* يضمن أنه يمتد بعرض الشاشة */
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- التصميم المتجاوب --- */
+        @media (max-width: 1024px) {
+            .content-section {
+                padding: 3rem;
+                margin: 3rem auto;
+            }
+            .content-section h2 {
+                font-size: 2.5rem;
+                margin-bottom: 2rem;
+            }
+            .feature-cards-container {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+            .feature-card {
+                padding: 1.8rem;
+            }
+            .feature-card h3 {
+                font-size: 1.5rem;
+            }
+            .feature-card p {
+                font-size: 1rem;
+            }
+            .founder-card {
+                padding: 2.5rem;
+            }
+            .founder-card img {
+                width: 160px;
+                height: 160px;
+            }
+            .founder-card h3 {
+                font-size: 2rem;
+            }
+            .founder-card p {
+                font-size: 1.1rem;
+            }
+            .plain-text-section {
+                margin: 5rem auto 2.5rem auto;
+            }
+            .plain-text-section h2 {
                 font-size: 2.5rem;
             }
+            .plain-text-section p {
+                font-size: 1.15rem;
+            }
+        }
 
+        @media (max-width: 768px) {
             .login-container {
+                margin-top: 10vh;
+                margin-bottom: 4rem;
+                padding: 2rem 2.5rem;
+                max-width: 350px; /* أضيق للأجهزة اللوحية الأصغر/الهواتف الكبيرة */
+                gap: 2rem;
+            }
+            .logo {
+                font-size: 3rem;
+                letter-spacing: 2px;
+            }
+            .login-form {
+                gap: 1.5rem;
+            }
+            .input-field, .login-button {
                 padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .content-section {
+                padding: 2rem;
+                margin: 2.5rem auto;
+                width: 95%; /* استخدام عرض أكبر على الشاشات الأصغر */
+            }
+            .content-section h2 {
+                font-size: 2.2rem;
+                margin-bottom: 1.8rem;
+            }
+
+            .feature-cards-container {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* السماح بعمودين على معظم الهواتف */
+                gap: 1.2rem;
+            }
+            .feature-card {
+                padding: 1.5rem;
+            }
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+            .feature-card p {
+                font-size: 0.95rem;
+            }
+
+            .founder-card {
+                padding: 2rem;
+                max-width: 100%; /* ملء العرض المتاح */
+            }
+            .founder-card img {
+                width: 140px;
+                height: 140px;
+                margin-bottom: 1.5rem;
+            }
+            .founder-card h3 {
+                font-size: 1.8rem;
+            }
+            .founder-card p {
+                font-size: 1.05rem;
+            }
+
+            .plain-text-section {
+                margin: 4rem auto 2rem auto;
+                width: 90%; /* استخدام عرض أكبر */
+            }
+            .plain-text-section h2 {
+                font-size: 2.2rem;
+            }
+            .plain-text-section p {
+                font-size: 1.1rem;
+            }
+            .copyright {
+                margin-top: 4rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-bottom: 30px;
+            }
+            .login-container {
+                padding: 1.5rem 1.8rem;
+                gap: 1.5rem;
+                margin-top: 8vh;
+                margin-bottom: 3rem;
+                width: 95%; /* زيادة العرض على أصغر الشاشات */
+            }
+            .logo {
+                font-size: 2.5rem;
+                letter-spacing: 1.5px;
+            }
+            .input-field, .login-button {
+                padding: 0.9rem;
+                font-size: 0.95rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+                margin: 2rem auto;
+            }
+            .content-section h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .feature-cards-container {
+                grid-template-columns: 1fr; /* تراص جميع البطاقات عمودياً على الهواتف الصغيرة جداً */
+                gap: 1rem;
+            }
+            .feature-card {
+                padding: 1.2rem;
+            }
+            .feature-card h3 {
+                font-size: 1.1rem;
+            }
+            .feature-card p {
+                font-size: 0.85rem;
+            }
+
+            .founder-card {
+                padding: 1.5rem;
+            }
+            .founder-card img {
+                width: 100px;
+                height: 100px;
+            }
+            .founder-card h3 {
+                font-size: 1.5rem;
+            }
+            .founder-card p {
+                font-size: 0.9rem;
+            }
+
+            .plain-text-section {
+                margin: 3rem auto 1.5rem auto;
+            }
+            .plain-text-section h2 {
+                font-size: 1.8rem;
+            }
+            .plain-text-section p {
+                font-size: 1rem;
+            }
+            .copyright {
+                margin-top: 3rem;
+                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- الحاوية الرئيسية التي تتوسط الشاشة -->
-    <!-- Main container centered on the screen -->
     <div class="login-container">
-        
-        <!-- شعار CodeX AI -->
-        <!-- CodeX AI Logo -->
         <h1 class="logo">CodeX AI</h1>
-        
-        <!-- نموذج تسجيل الدخول -->
-        <!-- Login Form -->
         <form class="login-form" id="loginForm">
             <input type="text" id="username" class="input-field" placeholder="اسم المستخدم" required autocomplete="off">
             <button type="submit" class="login-button">تسجيل الدخول</button>
         </form>
+    </div>
 
+    <div class="content-section">
+        <h2>القدرات الرئيسية</h2>
+        <div class="feature-cards-container">
+            <div class="feature-card">
+                <h3>حل المشكلات المتقدم</h3>
+                <p>استفد من أحدث الخوارزميات لمواجهة التحديات المعقدة وإيجاد الحلول المثلى بكفاءة.</p>
+            </div>
+            <div class="feature-card">
+                <h3>توليد المحتوى الإبداعي</h3>
+                <p>إنشاء نصوص عالية الجودة، مقتطفات برمجية، وأفكار مبتكرة عبر مختلف المجالات.</p>
+            </div>
+            <div class="feature-card">
+                <h3>التعلم والنمو الشخصي</h3>
+                <p>احصل على رؤى وتوصيات مخصصة لتعزيز التعلم المستمر وتطوير المهارات.</p>
+            </div>
+            <div class="feature-card">
+                <h3>تكامل سلس لسير العمل</h3>
+                <p>ادمج CodeX AI في أدواتك ومنصاتك الحالية لتجربة عمل سلسة ومنتجة.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>تعرّف على صاحب الرؤية</h2>
+        <div class="founder-card">
+            <img src="https://i.pravatar.cc/150?img=68" alt="فيوتشر - مؤسس CodeX AI">
+            <h3>فيوتشر</h3>
+            <p>فيوتشر هو العقل المبتكر وراء CodeX AI، مدفوعًا بشغف تمكين الأفراد والشركات من خلال الذكاء الاصطناعي المتقدم. بخلفيته في أبحاث الذكاء الاصطناعي وفهم عميق للتفاعل بين الإنسان والحاسوب، تصور فيوتشر CodeX AI كأداة لسد الفجوة بين التكنولوجيا المعقدة والإنتاجية اليومية، بهدف جعل الذكاء الاصطناعي متاحًا ومفيدًا للجميع.</p>
+        </div>
+    </div>
+
+    <div class="plain-text-section">
+        <h2>رؤيتنا</h2>
+        <p>في CodeX AI، تتمثل رؤيتنا في إنشاء أنظمة ذكية لا تحل المشكلات المعقدة فحسب، بل تمكّن القدرات البشرية أيضًا. نحن نؤمن بمستقبل يعمل فيه الذكاء الاصطناعي بشكل تعاوني مع الأفراد، مما يعزز قدراتهم، ويشعل الابتكار، ويساهم إيجابًا في مواجهة أهم تحديات المجتمع. نحن ملتزمون بتطوير الذكاء الاصطناعي الأخلاقي ونهج يركز على المستخدم لضمان إمكانية الوصول والتأثير الهادف للجميع.</p>
+    </div>
+
+    <div class="copyright">
+        &copy; 2025 CodeX AI. جميع الحقوق محفوظة.
     </div>
 
     <script>
-        // هذا السكريبت ينفذ وظيفتين:
-        // 1. التحقق الفوري عند تحميل الصفحة إذا كان المستخدم مسجلاً دخوله بالفعل.
+        // هذا السكريبت يتعامل مع:
+        // 1. التحقق الفوري مما إذا كان المستخدم مسجلاً للدخول بالفعل لإعادة التوجيه.
         // 2. معالجة عملية تسجيل الدخول عند إرسال النموذج.
         
-        // This script performs two functions:
-        // 1. Immediately checks on page load if the user is already logged in.
-        // 2. Handles the login process when the form is submitted.
-
         (function() {
-            // --- التحقق الفوري من وجود اسم مستخدم ---
-            // --- Immediate check for an existing username ---
+            // --- التحقق الفوري من وجود اسم مستخدم حالي ---
             const savedUsername = localStorage.getItem('username');
             if (savedUsername) {
-                console.log(`مستخدم موجود: ${savedUsername}. يتم التوجيه...`); // Log for debugging
-                // إذا وجد اسم مستخدم، يتم توجيه المستخدم مباشرة إلى الصفحة الرئيسية
-                // If a username is found, redirect immediately to the main page
+                console.log(`المستخدم الحالي: ${savedUsername}. يتم إعادة التوجيه إلى index.html...`); // تسجيل لغرض التصحيح
+                // إذا تم العثور على اسم مستخدم، أعد التوجيه فوراً إلى الصفحة الرئيسية
                 window.location.href = 'index.html'; 
             }
 
             // --- معالجة إرسال النموذج ---
-            // --- Form submission handling ---
             const loginForm = document.getElementById('loginForm');
             const usernameInput = document.getElementById('username');
 
-            loginForm.addEventListener('submit', function(event) {
-                // منع السلوك الافتراضي للنموذج (إعادة تحميل الصفحة)
-                // Prevent the default form behavior (page reload)
-                event.preventDefault(); 
+            if (loginForm) { // تأكد من وجود النموذج قبل إضافة المستمع (يجب أن يكون موجوداً في هذه الصفحة)
+                loginForm.addEventListener('submit', function(event) {
+                    // منع السلوك الافتراضي للنموذج (إعادة تحميل الصفحة)
+                    event.preventDefault(); 
 
-                // الحصول على القيمة من حقل الإدخال وإزالة المسافات الزائدة
-                // Get the value from the input field and trim whitespace
-                const username = usernameInput.value.trim();
+                    // الحصول على القيمة من حقل الإدخال وإزالة المسافات البيضاء الزائدة
+                    const username = usernameInput.value.trim();
 
-                // التحقق من أن اسم المستخدم ليس فارغًا
-                // Check if the username is not empty
-                if (username) {
-                    // حفظ اسم المستخدم في التخزين المحلي للمتصفح
-                    // Save the username to the browser's localStorage
-                    localStorage.setItem('username', username);
-                    
-                    console.log(`تم حفظ المستخدم: ${username}. يتم التوجيه...`); // Log for debugging
+                    // التحقق مما إذا كان اسم المستخدم غير فارغ
+                    if (username) {
+                        // حفظ اسم المستخدم في التخزين المحلي للمتصفح (localStorage)
+                        localStorage.setItem('username', username);
+                        
+                        console.log(`تم حفظ المستخدم: ${username}. يتم إعادة التوجيه إلى index.html...`); // تسجيل لغرض التصحيح
 
-                    // توجيه المستخدم إلى الصفحة الرئيسية
-                    // Redirect the user to the main page
-                    window.location.href = 'index.html';
-                }
-            });
+                        // إعادة توجيه المستخدم إلى الصفحة الرئيسية
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
         })();
     </script>
 
