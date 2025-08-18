@@ -1,190 +1,458 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodeX Ai | Super Smart Assistant</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: #0d0d0d;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    header {
-      background: #1a1a1a;
-      padding: 15px;
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      border-bottom: 1px solid #333;
-    }
-    .chat-container {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .msg {
-      max-width: 70%;
-      padding: 12px;
-      border-radius: 12px;
-      line-height: 1.5;
-      word-wrap: break-word;
-    }
-    .user {
-      align-self: flex-end;
-      background: #00b894;
-      border-bottom-right-radius: 2px;
-    }
-    .ai {
-      align-self: flex-start;
-      background: #2d2d2d;
-      border-bottom-left-radius: 2px;
-    }
-    .input-area {
-      display: flex;
-      padding: 10px;
-      background: #1a1a1a;
-      border-top: 1px solid #333;
-    }
-    .input-area input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      outline: none;
-    }
-    .input-area button {
-      margin-left: 10px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      background: #00b894;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .input-area button:hover {
-      background: #019875;
-    }
-    @media(max-width:600px){
-      header { font-size: 16px; }
-      .msg { max-width: 90%; font-size: 14px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeX AI</title>
+    <style>
+        /* --- Google Fonts --- */
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        /* --- Global Styles & Dark Mode --- */
+        :root {
+            --bg-color: #131314;
+            --surface-color: #1e1f20;
+            --primary-text-color: #e3e3e3;
+            --secondary-text-color: #bdc1c6;
+            --accent-color: #8ab4f8;
+            --border-color: #3c4043;
+            --hover-color: #282a2c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        @media (max-width: 800px) {
+            .container {
+                border-radius: 0;
+                border: none;
+            }
+        }
+
+        /* --- Chat Header --- */
+        .chat-header {
+            padding: 20px;
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .chat-header h1 .gradient-text {
+            background: -webkit-linear-gradient(45deg, #8ab4f8, #f8a8a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Chat Box --- */
+        .chat-box {
+            flex-grow: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-box::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .welcome-message h2 {
+            font-size: 42px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .welcome-message .gradient-hello {
+            background: -webkit-linear-gradient(270deg, #4d89f3, #9d79f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .welcome-message p {
+            font-size: 20px;
+            color: var(--secondary-text-color);
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            max-width: 95%;
+        }
+
+        .message .sender {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sender .icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-left: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .user .sender .icon {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+        
+        .bot .sender .icon {
+            background: linear-gradient(45deg, #8ab4f8, #f8a8a8);
+            padding: 2px;
+        }
+        
+        .bot .sender .icon img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .message .text {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .bot .text {
+             color: var(--secondary-text-color);
+        }
+        
+        .bot .text strong {
+            color: var(--primary-text-color);
+            font-weight: 700;
+        }
+
+        .bot .text code {
+            background-color: #131314;
+            border: 1px solid var(--border-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            direction: ltr;
+        }
+        
+        .bot .text ul {
+            padding-right: 20px;
+        }
+
+        /* --- Input Area --- */
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--surface-color);
+        }
+
+        .input-form {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-color);
+            border-radius: 28px;
+            padding: 5px 5px 5px 20px;
+            border: 1px solid transparent;
+            transition: border 0.3s;
+        }
+
+        .input-form:focus-within {
+             border-color: var(--accent-color);
+        }
+        
+        .input-form input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: var(--primary-text-color);
+            font-size: 16px;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .input-form input::placeholder {
+            color: var(--secondary-text-color);
+        }
+
+        .input-form button {
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .input-form button:hover {
+            background-color: #9ac2ff;
+        }
+
+        .input-form button svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--bg-color);
+        }
+        
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+        }
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            margin: 0 2px;
+            background-color: var(--secondary-text-color);
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
+    </style>
 </head>
 <body>
-  <header id="header">CodeX Ai</header>
 
-  <div class="chat-container" id="chat"></div>
+    <div class="container">
+        <header class="chat-header">
+            <h1><span class="gradient-text">CodeX AI</span></h1>
+        </header>
 
-  <div class="input-area">
-    <input type="text" id="userInput" placeholder="Type your message...">
-    <button onclick="sendMsg()">Send</button>
-  </div>
+        <main class="chat-box" id="chat-box">
+            <div class="welcome-message" id="welcome-message">
+                <h2 id="greeting">مرحباً <span class="gradient-hello">...</span></h2>
+                <p>كيف يمكنني مساعدتك اليوم؟</p>
+            </div>
+            </main>
 
-  <script>
-    const username = localStorage.getItem("codexUser") || "Guest";
-    document.getElementById("header").innerText = "Hello " + username + " 👋 | CodeX Ai";
+        <footer class="chat-input">
+            <form class="input-form" id="chat-form">
+                <input type="text" id="user-input" placeholder="اكتب سؤالك هنا..." autocomplete="off">
+                <button type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                </button>
+            </form>
+        </footer>
+    </div>
 
-    const chat = document.getElementById("chat");
-    let memory = []; // ذاكرة المحادثة
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatBox = document.getElementById('chat-box');
+            const chatForm = document.getElementById('chat-form');
+            const userInput = document.getElementById('user-input');
+            const greeting = document.getElementById('greeting');
+            const welcomeMessage = document.getElementById('welcome-message');
 
-    const knowledgeBase = {
-      greetings: ["Hello! 🌍", "Hey " + username + "! 🚀", "Welcome back, ready to think big?"],
-      tech: [
-        "You can solve that with a function refactor 🔧.",
-        "Sounds like an async issue — maybe try Promises or await?",
-        "Debugging tip: isolate the smallest failing part of your code 🧩."
-      ],
-      analysis: [
-        "Let’s break this problem step by step 🔍.",
-        "From a high-level view, this system looks scalable.",
-        "I suggest drawing a flowchart before coding 📊."
-      ],
-      motivation: [
-        "Great minds don’t quit, and you’re on the right path! 💡",
-        "Every error is a lesson, not a failure 🚀.",
-        "You’re building knowledge with each attempt 🔥."
-      ],
-      creative: [
-        "What if we combine AI with IoT sensors for smarter homes? 🏡",
-        "Imagine an app that predicts mood from typing speed 🎭.",
-        "That idea could evolve into a full research project 📚."
-      ],
-      facts: [
-        "Did you know? The first computer bug was literally a moth 🦋.",
-        "Fun fact: Your brain has ~86 billion neurons firing right now ⚡.",
-        "AI doesn’t sleep, but it can still dream through simulations 🤖."
-      ]
-    };
+            // --- 1. استدعاء اسم المستخدم وعرض رسالة الترحيب ---
+            function getUserName() {
+                // سيتم استدعاء الاسم من الرابط (URL)
+                // مثال: index.html?username=Ahmed
+                // لصفحة تسجيل الدخول، يجب أن تحول المستخدم إلى هذا الرابط بعد إدخال اسمه
+                const urlParams = new URLSearchParams(window.location.search);
+                const username = urlParams.get('username');
+                return username ? username : "ضيف"; // إذا لم يتم العثور على اسم، استخدم "ضيف"
+            }
 
-    // توليد رد جديد ضخم
-    function generateAIResponse(text){
-      const lower = text.toLowerCase();
-      let pool = [];
+            const username = getUserName();
+            greeting.querySelector('.gradient-hello').textContent = username;
 
-      if(lower.includes("hello") || lower.includes("hi") || lower.includes("hey")){
-        pool = knowledgeBase.greetings;
-      }
-      else if(lower.includes("code") || lower.includes("error") || lower.includes("problem")){
-        pool = knowledgeBase.tech;
-      }
-      else if(lower.includes("analyze") || lower.includes("explain") || lower.includes("analysis")){
-        pool = knowledgeBase.analysis;
-      }
-      else if(lower.includes("motivate") || lower.includes("help me") || lower.includes("i'm tired")){
-        pool = knowledgeBase.motivation;
-      }
-      else if(lower.includes("idea") || lower.includes("create") || lower.includes("invent")){
-        pool = knowledgeBase.creative;
-      }
-      else if(lower.includes("fact") || lower.includes("tell me something")){
-        pool = knowledgeBase.facts;
-      }
-      else {
-        // fallback: يخترع رد جديد باستخدام كلمات عشوائية
-        const starters = ["Interesting point,", "From another angle,", "If we imagine,", "One possibility,"];
-        const middles = ["this could connect with AI logic", "the solution might be hidden in details", "we could invent a new approach", "there’s a bigger picture here"];
-        const endings = ["let’s explore it further.", "worth experimenting with 🚀.", "could even be a breakthrough idea!", "what do you think?"];
-        pool = [ starters[Math.floor(Math.random()*starters.length)] + " " +
-                 middles[Math.floor(Math.random()*middles.length)] + " " +
-                 endings[Math.floor(Math.random()*endings.length)] ];
-      }
+            // --- 2. قاعدة البيانات الذكية (سهلة التوسيع) ---
+            const aiDatabase = {
+                // الكلمات المفتاحية
+                keywords: {
+                    "معلومات|عرف|من أنت": "introduction",
+                    "تصميم|css|html|javascript": "frontend_dev",
+                    "أداء|سرعة الموقع": "performance",
+                    "قواعد بيانات|database": "database_info",
+                    "أمان|حماية": "security",
+                    "api": "api_info",
+                    "شكرا|thank you": "thanks",
+                },
+                // الردود
+                responses: {
+                    "introduction": "أنا **CodeX AI**، نموذج ذكاء اصطناعي تم تطويره لمساعدتك في كل ما يتعلق بالبرمجة والتكنولوجيا. أستطيع تحليل الأكواد، وتقديم اقتراحات لتحسين الأداء، والإجابة على استفساراتك التقنية.",
+                    "frontend_dev": "لتصميم واجهة أمامية (Front-End) عصرية، يجب التركيز على عدة نقاط:\n\n* **تجربة المستخدم (UX):** يجب أن تكون الواجهة سهلة الاستخدام وبديهية.\n* **التصميم المتجاوب (Responsive Design):** لضمان عمل الموقع بكفاءة على جميع الأجهزة باستخدام تقنيات مثل `Flexbox` و `Grid`.\n* **إطارات العمل (Frameworks):** استخدام إطارات عمل مثل `React` أو `Vue.js` يمكن أن يسرّع عملية التطوير ويزيد من تنظيم الكود.",
+                    "performance": "لتحسين أداء الموقع، يمكنك اتباع الخطوات التالية:\n\n1.  **ضغط الصور:** استخدم أدوات لتقليل حجم الصور دون التأثير على جودتها.\n2.  **تقليل ملفات CSS/JS (Minification):** إزالة المسافات والأسطر غير الضرورية من الأكواد.\n3.  **استخدام التخزين المؤقت (Caching):** لتخزين أجزاء من موقعك على جهاز المستخدم لزيادة سرعة التحميل في الزيارات القادمة.\n4.  **تحميل غير متزامن (Asynchronous Loading):** لملفات JavaScript لمنعها من إيقاف عرض الصفحة.",
+                    "database_info": "عند اختيار قاعدة بيانات، يجب أن تفكر في طبيعة مشروعك:\n\n* **SQL (مثل MySQL, PostgreSQL):** مناسبة للتطبيقات التي تتطلب بنية بيانات ثابتة وعلاقات معقدة بين الجداول.\n* **NoSQL (مثل MongoDB, Firebase):** ممتازة للتطبيقات التي تحتاج إلى مرونة عالية في تخزين البيانات وقابلية للتوسع الأفقي بسهولة.",
+                    "security": "أمان المواقع هو أولوية قصوى. بعض الممارسات الأساسية تشمل:\n\n* **استخدام HTTPS:** لتشفير البيانات بين المتصفح والخادم.\n* **التحقق من مدخلات المستخدم (Input Validation):** لمنع هجمات مثل `SQL Injection` و `XSS`.\n* **تحديث المكتبات والبرامج:** بشكل دوري لسد أي ثغرات أمنية مكتشفة.",
+                    "api_info": "الـ **API** (واجهة برمجة التطبيقات) هي مجموعة من القواعد والبروتوكولات التي تسمح لتطبيقات مختلفة بالتواصل مع بعضها البعض. عند تصميم API، من المهم أن تكون:\n\n* **موثقة جيداً (Well-documented).**\n* **آمنة (Secure)** عبر استخدام مفاتيح المصادقة (Authentication Keys).\n* **فعالة (Efficient)** لتقليل حجم البيانات المنقولة.",
+                    "thanks": "على الرحب والسعة! أنا هنا للمساعدة في أي وقت.",
+                    "default": "لم أفهم سؤالك تماماً. هل يمكنك إعادة صياغته بشكل أوضح؟ أنا متخصص في الإجابة على الأسئلة التقنية والبرمجية."
+                }
+            };
+            
+            // --- 3. محرك التحليل والرد ---
+            function getAIResponse(query) {
+                query = query.toLowerCase();
+                for (const key in aiDatabase.keywords) {
+                    const keywords = key.split('|');
+                    if (keywords.some(keyword => query.includes(keyword))) {
+                        const responseKey = aiDatabase.keywords[key];
+                        return aiDatabase.responses[responseKey];
+                    }
+                }
+                return aiDatabase.responses.default;
+            }
 
-      return pool[Math.floor(Math.random() * pool.length)];
-    }
+            // --- 4. التعامل مع إرسال النموذج ---
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const userMessage = userInput.value.trim();
+                if (userMessage === '') return;
 
-    function addMsg(content, type){
-      const div = document.createElement("div");
-      div.className = "msg " + type;
-      div.innerText = content;
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-    }
+                // إخفاء رسالة الترحيب عند بدء المحادثة
+                if (welcomeMessage) {
+                    welcomeMessage.style.display = 'none';
+                }
 
-    function sendMsg(){
-      const input = document.getElementById("userInput");
-      const text = input.value.trim();
-      if(!text) return;
-      addMsg(text, "user");
-      memory.push({role:"user", content:text});
-      input.value = "";
+                appendMessage(userMessage, 'user');
+                userInput.value = '';
 
-      setTimeout(()=>{
-        const reply = generateAIResponse(text);
-        addMsg(reply, "ai");
-        memory.push({role:"ai", content:reply});
-      }, 800);
-    }
-  </script>
+                // عرض مؤشر الكتابة
+                const typingIndicator = createTypingIndicator();
+                chatBox.appendChild(typingIndicator);
+                scrollToBottom();
+
+                // محاكاة تأخير الرد
+                setTimeout(() => {
+                    chatBox.removeChild(typingIndicator); // إزالة المؤشر
+                    const aiResponse = getAIResponse(userMessage);
+                    appendMessage(aiResponse, 'bot');
+                }, 1500);
+            });
+
+            // --- 5. إضافة الرسائل إلى الواجهة ---
+            function appendMessage(text, senderType) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', senderType);
+                
+                const senderIcon = senderType === 'user' 
+                    ? `<div class="icon">${username.charAt(0).toUpperCase()}</div>`
+                    : `<div class="icon"><img src="https://i.ibb.co/FqPXTmD/codex-logo.png" alt="AI"></div>`;
+
+                const senderName = senderType === 'user' ? username : 'CodeX AI';
+                
+                messageDiv.innerHTML = `
+                    <div class="sender">
+                        ${senderIcon}
+                        <span>${senderName}</span>
+                    </div>
+                    <div class="text"></div>
+                `;
+
+                chatBox.appendChild(messageDiv);
+                
+                // تأثير الكتابة للرد
+                if (senderType === 'bot') {
+                    const textElement = messageDiv.querySelector('.text');
+                    typeWriter(text, textElement);
+                } else {
+                    messageDiv.querySelector('.text').innerHTML = text;
+                }
+
+                scrollToBottom();
+            }
+
+            // --- 6. وظيفة تأثير الكتابة ---
+            function typeWriter(txt, element) {
+                let i = 0;
+                function type() {
+                    if (i < txt.length) {
+                        // للتعامل مع أكواد HTML داخل النص
+                        if (txt.substring(i, i + 1) === '<') {
+                            const endIndex = txt.indexOf('>', i);
+                            element.innerHTML += txt.substring(i, endIndex + 1);
+                            i = endIndex + 1;
+                        } else {
+                            element.innerHTML += txt.charAt(i);
+                            i++;
+                        }
+                        scrollToBottom();
+                        setTimeout(type, 20); // سرعة الكتابة
+                    }
+                }
+                type();
+            }
+            
+            // --- 7. وظيفة إنشاء مؤشر الكتابة ---
+            function createTypingIndicator() {
+                const indicatorDiv = document.createElement('div');
+                indicatorDiv.classList.add('message', 'bot', 'typing-indicator');
+                indicatorDiv.innerHTML = `
+                    <div class="sender">
+                        <div class="icon"><img src="https://i.ibb.co/FqPXTmD/codex-logo.png" alt="AI"></div>
+                    </div>
+                    <div class="text">
+                        <span></span><span></span><span></span>
+                    </div>
+                `;
+                return indicatorDiv;
+            }
+
+            // --- 8. وظيفة التمرير للأسفل ---
+            function scrollToBottom() {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
+    </script>
 </body>
 </html>
