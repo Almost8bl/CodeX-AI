@@ -17,7 +17,7 @@
             --input-bg-color: #2a2b2e;
             --hover-bg-color: #3c4043;
             --card-bg-color: #282a2d;
-            --font-family: 'Google Sans', 'Noto Sans Arabic', sans-serif;
+            --font-family: 'Noto Sans Arabic', 'Google Sans', sans-serif;
         }
 
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&display=swap');
@@ -28,14 +28,18 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html {
             height: 100%;
-            width: 100%;
+        }
+        
+        body {
+            height: 100%;
             background-color: var(--bg-color);
             color: var(--primary-text-color);
             font-family: var(--font-family);
             line-height: 1.6;
-            overflow: hidden;
+            /* IMPORTANT FIX: Prevent body scrolling on mobile */
+            overflow: hidden; 
         }
 
         /* Login Modal Styles */
@@ -52,14 +56,15 @@
             z-index: 1000;
             opacity: 1;
             transition: opacity 0.5s ease;
+            padding: 15px;
         }
 
         .login-container {
             background-color: var(--surface-color);
-            padding: 40px;
+            padding: 30px 25px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            width: 90%;
+            width: 100%;
             max-width: 500px;
             text-align: center;
             animation: fadeIn 0.7s ease-out;
@@ -71,7 +76,7 @@
         }
 
         .login-container h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 10px;
             background: linear-gradient(90deg, var(--accent-color-start), var(--accent-color-end));
             -webkit-background-clip: text;
@@ -80,7 +85,8 @@
 
         .login-container p {
             color: var(--secondary-text-color);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
         }
 
         .input-group {
@@ -114,7 +120,7 @@
 
         .hobbies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 10px;
             margin-bottom: 30px;
         }
@@ -123,7 +129,8 @@
             background-color: var(--input-bg-color);
             border: 2px solid var(--border-color);
             border-radius: 10px;
-            padding: 15px 10px;
+            padding: 12px 8px;
+            font-size: 0.9rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -136,8 +143,8 @@
         }
 
         .hobby-card svg {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             margin-bottom: 8px;
             fill: var(--secondary-text-color);
             transition: fill 0.3s;
@@ -167,8 +174,9 @@
 
         /* Main App Structure */
         #app-container {
-            display: none; /* Initially hidden */
-            height: 100vh;
+            display: none;
+            height: 100vh; /* Full viewport height */
+            width: 100vw; /* Full viewport width */
             display: flex;
         }
 
@@ -181,6 +189,7 @@
             flex-direction: column;
             border-left: 1px solid var(--border-color);
             transition: transform 0.3s ease;
+            flex-shrink: 0; /* Prevent sidebar from shrinking */
         }
 
         .sidebar-header {
@@ -218,99 +227,41 @@
             background-color: var(--hover-bg-color);
         }
 
-        .new-chat-btn svg {
-            width: 20px;
-            height: 20px;
-        }
+        .history { flex-grow: 1; overflow-y: auto; }
+        .history h3 { color: var(--secondary-text-color); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 10px; }
+        .history ul { list-style: none; }
+        .history li { padding: 10px 15px; border-radius: 20px; margin-bottom: 5px; cursor: pointer; transition: background-color 0.3s; }
+        .history li:hover { background-color: var(--hover-bg-color; }
 
-        .history {
-            flex-grow: 1;
-            overflow-y: auto;
-        }
+        .sidebar-footer { padding-top: 20px; border-top: 1px solid var(--border-color); }
+        #logout-button { background: none; border: none; color: var(--secondary-text-color); cursor: pointer; display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px; border-radius: 8px; font-size: 1rem; }
+        #logout-button:hover { background-color: var(--hover-bg-color); color: var(--primary-text-color); }
 
-        .history h3 {
-            color: var(--secondary-text-color);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        
-        .history ul {
-            list-style: none;
-        }
-        
-        .history li {
-            padding: 10px 15px;
-            border-radius: 20px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .history li:hover {
-            background-color: var(--hover-bg-color);
-        }
-
-        .sidebar-footer {
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        #logout-button {
-            background: none;
-            border: none;
-            color: var(--secondary-text-color);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-        
-        #logout-button:hover {
-            background-color: var(--hover-bg-color);
-            color: var(--primary-text-color);
-        }
-
-        #logout-button svg {
-            width: 20px;
-            height: 20px;
-        }
-        
         /* Chat Area */
         #chat-area {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100vh; /* Full height for the chat area */
+            overflow: hidden; /* Prevent this container from scrolling */
         }
         
         .chat-header {
-            padding: 15px 30px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0; /* Prevent header from shrinking */
         }
         
-        .chat-header #user-greeting {
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-        
-        .menu-toggle {
-            display: none; /* Hidden on desktop */
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
+        .chat-header #user-greeting { font-size: 1.2rem; font-weight: 500; }
+        .menu-toggle { display: none; cursor: pointer; background: none; border: none; }
 
+        /* --- IMPORTANT FIX FOR SCROLLING --- */
         #chat-container {
             flex-grow: 1;
-            overflow-y: auto;
-            padding: 0 20px;
+            overflow-y: auto; /* This makes ONLY the chat container scrollable */
+            padding: 0 15px;
         }
 
         .chat-content {
@@ -319,211 +270,54 @@
             padding: 20px 0;
         }
         
-        .welcome-message {
-            text-align: center;
-            padding: 50px 20px;
-        }
+        .welcome-message { text-align: center; padding: 50px 20px; }
+        .welcome-message h1 { font-size: 3rem; font-weight: 700; background: linear-gradient(90deg, var(--accent-color-start), var(--accent-color-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        .welcome-message p { font-size: 1.2rem; color: var(--secondary-text-color); }
 
-        .welcome-message h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--accent-color-start), var(--accent-color-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-        
-        .welcome-message p {
-            font-size: 1.2rem;
-            color: var(--secondary-text-color);
-        }
+        .message { display: flex; margin-bottom: 20px; animation: messageFadeIn 0.5s ease; max-width: 95%; }
+        @keyframes messageFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message .avatar { width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: 12px; flex-shrink: 0; }
+        .message .avatar.user-avatar { background: linear-gradient(135deg, var(--accent-color-start), var(--accent-color-end)); color: var(--bg-color); font-weight: bold; }
+        .message .text-content { padding: 12px 18px; background-color: var(--surface-color); border-radius: 18px; max-width: calc(100% - 47px); word-wrap: break-word; }
+        .message.user { justify-content: flex-start; flex-direction: row-reverse; align-self: flex-end; }
+        .message.user .avatar { margin-right: 12px; margin-left: 0; }
+        .message.user .text-content { background-color: var(--card-bg-color); }
+        .message.ai { align-self: flex-start; }
 
-        .message {
-            display: flex;
-            margin-bottom: 20px;
-            animation: messageFadeIn 0.5s ease;
-        }
-        
-        @keyframes messageFadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .message .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--hover-bg-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-left: 15px;
-            flex-shrink: 0;
-        }
-        
-        .message .avatar.user-avatar {
-             background: linear-gradient(135deg, var(--accent-color-start), var(--accent-color-end));
-             color: var(--bg-color);
-             font-weight: bold;
-        }
-        
-        .message .avatar.ai-avatar svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .message .text-content {
-            padding: 15px 20px;
-            background-color: var(--surface-color);
-            border-radius: 18px;
-            max-width: calc(100% - 70px);
-        }
-        
-        .message.user {
-            justify-content: flex-start; /* Corrected for RTL */
-            flex-direction: row-reverse;
-        }
-        
-        .message.user .avatar {
-            margin-right: 15px;
-            margin-left: 0;
-        }
-        
-        .message.user .text-content {
-            background-color: var(--card-bg-color);
-        }
-
-        .typing-indicator {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--secondary-text-color);
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-        
+        .typing-indicator { display: flex; align-items: center; gap: 5px; }
+        .typing-indicator span { width: 8px; height: 8px; border-radius: 50%; background-color: var(--secondary-text-color); animation: bounce 1.4s infinite ease-in-out both; }
         .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
         .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-        
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
-        }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
 
         /* Input Area */
         #input-area {
-            padding: 20px;
+            padding: 15px;
+            flex-shrink: 0; /* Prevent input area from shrinking */
         }
 
-        .input-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        #chat-input {
-            width: 100%;
-            background-color: var(--input-bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 15px 60px 15px 20px;
-            color: var(--primary-text-color);
-            font-size: 1rem;
-            font-family: inherit;
-            resize: none;
-            line-height: 1.5;
-            height: 56px;
-            transition: border-color 0.3s;
-        }
-        
-        #chat-input:focus {
-            outline: none;
-            border-color: var(--accent-color-start);
-        }
-        
-        #send-btn {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--accent-color-start);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s;
-        }
+        .input-wrapper { max-width: 800px; margin: 0 auto; position: relative; }
+        #chat-input { width: 100%; background-color: var(--input-bg-color); border: 1px solid var(--border-color); border-radius: 28px; padding: 15px 60px 15px 20px; color: var(--primary-text-color); font-size: 1rem; font-family: inherit; resize: none; line-height: 1.5; max-height: 150px; overflow-y: auto; }
+        #chat-input:focus { outline: none; border-color: var(--accent-color-start); }
+        #send-btn { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: var(--accent-color-start); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s; }
+        #send-btn:hover { background-color: #a2c6f9; }
 
-        #send-btn:hover {
-            background-color: #a2c6f9;
-        }
-        
-        #send-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--bg-color);
-        }
-
-        /* Responsive Design */
+        /* --- RESPONSIVE DESIGN FIXES --- */
         @media (max-width: 768px) {
-            #sidebar {
-                position: fixed;
-                top: 0;
-                right: 0;
-                height: 100%;
-                z-index: 200;
-                transform: translateX(100%);
-                box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-            }
-            
-            #sidebar.open {
-                transform: translateX(0);
-            }
-            
-            #chat-area {
-                width: 100%;
-            }
-
-            .chat-header {
-                padding: 15px;
-            }
-            
-            .menu-toggle {
-                display: block;
-                z-index: 201;
-            }
-            
-            .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 199;
-                display: none;
-            }
-
-            .overlay.active {
-                display: block;
-            }
-            
-            .welcome-message h1 {
-                font-size: 2.5rem;
-            }
-            
-            #input-area {
-                padding: 10px;
-            }
+            body { font-size: 15px; }
+            #sidebar { position: fixed; top: 0; right: 0; height: 100%; z-index: 200; transform: translateX(100%); box-shadow: -5px 0 15px rgba(0,0,0,0.2); }
+            #sidebar.open { transform: translateX(0); }
+            #chat-area { width: 100%; }
+            .menu-toggle { display: block; z-index: 201; }
+            .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 199; display: none; }
+            .overlay.active { display: block; }
+            .welcome-message h1 { font-size: 2.2rem; }
+            .welcome-message p { font-size: 1.1rem; }
+            #input-area { padding: 10px; }
+            #chat-input { padding: 12px 55px 12px 15px; }
+            #send-btn { width: 36px; height: 36px; }
+            .message .avatar { width: 30px; height: 30px; margin-left: 10px; }
+            .message.user .avatar { margin-right: 10px; margin-left: 0; }
         }
     </style>
 </head>
@@ -564,13 +358,13 @@
                          <h1>أهلاً بك!</h1>
                          <p>كيف يمكنني مساعدتك اليوم؟</p>
                     </div>
-                    </div>
+                </div>
             </div>
             <div id="input-area">
                 <div class="input-wrapper">
                     <textarea id="chat-input" placeholder="اسأل CodeX AI أي شيء..." rows="1"></textarea>
                     <button id="send-btn">
-                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2 .01 7z"/></svg>
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2 .01 7z"/></svg>
                     </button>
                 </div>
             </div>
@@ -581,17 +375,18 @@
                 <h2>CodeX AI</h2>
             </div>
             <button class="new-chat-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e3e3e3"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" fill="#e3e3e3"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                 <span>محادثة جديدة</span>
             </button>
             <div class="history">
                 <h3>المحادثات السابقة</h3>
                 <ul>
-                    </ul>
+                    <li style="color: var(--secondary-text-color); font-size: 0.9rem; text-align: center; cursor: default;">لا توجد محادثات بعد</li>
+                </ul>
             </div>
             <div class="sidebar-footer">
                 <button id="logout-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#bdc1c6"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" fill="#bdc1c6"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
                     <span>تسجيل الخروج</span>
                 </button>
             </div>
@@ -602,7 +397,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- DOM ELEMENTS ---
     const loginModal = document.getElementById('login-modal');
     const appContainer = document.getElementById('app-container');
     const loginForm = document.getElementById('login-form');
@@ -618,147 +412,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menu-toggle');
     const overlay = document.getElementById('overlay');
     
-    // --- HOBBIES DATA ---
     const hobbies = [
-        { id: 'programming', name: 'البرمجة', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>' },
-        { id: 'reading', name: 'القراءة', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5C5.33 4.5 4.11 4.65 3 5V19c1.11.35 2.33.5 3.5.5 1.95 0 4.05-.4 5.5-1.5 1.45 1.1 3.55 1.5 5.5 1.5 1.17 0 2.39-.15 3.5-.5V5zM21 18.5c-1.1.3-2.3.45-3.5.45-1.7 0-3.52-.35-5-1.2-1.48.85-3.3 1.2-5 1.2-1.2 0-2.4-.15-3.5-.45V6.5c1.1-.3 2.3-.45 3.5-.45 1.7 0 3.52.35 5 1.2 1.48-.85 3.3-1.2 5-1.2 1.2 0 2.4.15 3.5.45v12z"/></svg>' },
-        { id: 'gaming', name: 'الألعاب', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.58 16.09l-1.09-7.66C20.21 6.46 18.52 5 16.53 5H7.47C5.48 5 3.79 6.46 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19h0c.68 0 1.32-.27 1.76-.75L9 15.5v-2.5h6v2.5l2.29 2.75c.44.48 1.08.75 1.76.75h0c1.55 0 2.74-1.37 2.53-2.91zM11 11H9v2h2v-2zm4 0h-2v2h2v-2z"/></svg>' },
-        { id: 'travel', name: 'السفر', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>' },
-        { id: 'sports', name: 'الرياضة', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8c-1.6 0-3-1.4-3-3s1.4-3 3-3 3 1.4 3 3-1.4 3-3 3zm11.5-2.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.8-3.2c-1-.4-2.2-.6-3.4-.6-1.5 0-2.8.3-4.1.8.3-2.4 2.2-4.3 4.6-4.6.4-1.2 1.5-2.2 2.9-2.2 1.6 0 3 1.3 3 3 0 .5-.1.9-.3 1.3.8.3 1.5.8 2 1.4-.5.2-1 .3-1.3.3-1.1 0-2.1-.5-2.8-1.1z"/></svg>' },
-        { id: 'music', name: 'الموسيقى', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>' },
-        { id: 'art', name: 'الفن', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM12.9 14.3l-1.4-1.8-2.1 2.8c-.2.2-.5.2-.7 0l-1.7-2.1c-.2-.2-.5-.2-.7 0l-2.1 2.8-.9-1.2 2.1-2.8c.2-.2.5-.2.7 0l1.7 2.1c.2.2.5.2.7 0l2.1-2.8 1.1.8-1.2 1.6.9.7z"/></svg>' },
-        { id: 'tech', name: 'التقنية', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 2v2h10V2H7zm5 10c1.1 0 2-.9 2-2s-.9-2-2-2a2 2 0 1 0 0 4zm7-2h2v2h-2v-2zm-2 6h2v2h-2v-2zM4 16h2v2H4v-2zm-2-6h2v2H2v-2zm2-2h2v2H4V8zm16 2h2v2h-2v-2zM19 4h-2V2h2v2zm-2 14v2h2v-2h-2zM4 4h2v2H4V4zM2 4h2v2H2V4zm0 8h2v2H2v-2zm18 4h-2v2h2v-2zm-6-2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-4 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>' },
+        { id: 'programming', name: 'البرمجة', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>' },
+        { id: 'reading', name: 'القراءة', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.59,11.59l-5.29-5.29a2,2,0,0,0-2.83,0L3,16.71V21H7.29l10.42-10.42a2,2,0,0,0,0-2.83ZM6.21,19H5V17.79l8.42-8.42,1.21,1.21ZM21,7.29l-1.42,1.42-1.21-1.21L19.79,6a1,1,0,0,1,1.41,0,1,1,0,0,1,0,1.41Z"/></svg>' },
+        { id: 'gaming', name: 'الألعاب', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.58 16.09l-1.09-7.66C20.21 6.46 18.52 5 16.53 5H7.47C5.48 5 3.79 6.46 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19h0c.68 0 1.32-.27 1.76-.75L9 15.5v-2.5h6v2.5l2.29 2.75c.44.48 1.08.75 1.76.75h0c1.55 0 2.74-1.37 2.53-2.91zM11 11H9v2h2v-2zm4 0h-2v2h2v-2z"/></svg>' },
+        { id: 'travel', name: 'السفر', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>' },
+        { id: 'sports', name: 'الرياضة', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8c-1.6 0-3-1.4-3-3s1.4-3 3-3 3 1.4 3 3-1.4 3-3 3zm11.5-2.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.8-3.2c-1-.4-2.2-.6-3.4-.6-1.5 0-2.8.3-4.1.8.3-2.4 2.2-4.3 4.6-4.6.4-1.2 1.5-2.2 2.9-2.2 1.6 0 3 1.3 3 3 0 .5-.1.9-.3 1.3.8.3 1.5.8 2 1.4-.5.2-1 .3-1.3.3-1.1 0-2.1-.5-2.8-1.1z"/></svg>' },
+        { id: 'music', name: 'الموسيقى', icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>' },
     ];
     
-    // --- APP STATE ---
     let user = null;
 
-    // --- KNOWLEDGE BASE ---
+    // --- IMPROVED KNOWLEDGE BASE ---
     const knowledgeBase = {
         greetings: {
-            keywords: ["مرحبا", "أهلا", "السلام عليكم", "صباح الخير", "مساء الخير", "هاي", "hello", "hi"],
+            keywords: ["مرحبا", "أهلا", "السلام عليكم", "صباح الخير", "مساء الخير", "هاي", "hello", "hi", "اهلا"],
             responses: [
                 "أهلاً بك! كيف يمكنني مساعدتك اليوم؟",
-                "مرحباً! أنا هنا لمساعدتك. بماذا تفكر؟",
                 "وعليكم السلام! يسعدني خدمتك.",
-                "صباح النور! أتمنى لك يوماً رائعاً. كيف أساعدك؟",
-                "مساء النور! كيف يمكنني أن أجعل يومك أفضل؟"
+                "مرحباً! أنا هنا لمساعدتك. بماذا تفكر؟",
             ]
         },
         farewell: {
             keywords: ["وداعا", "باي", "إلى اللقاء", "مع السلامة", "goodbye", "bye"],
-            responses: [
-                "إلى اللقاء! أتمنى لك وقتاً ممتعاً.",
-                "مع السلامة! أنا موجود دائماً إذا احتجتني.",
-                "في أمان الله. لا تتردد في العودة."
-            ]
+            responses: [ "إلى اللقاء! أتمنى لك وقتاً ممتعاً.", "مع السلامة! أنا موجود دائماً إذا احتجتني." ]
         },
         about_self: {
-            keywords: ["من أنت", "ما هو اسمك", "ماذا تفعل", "ما هي قدراتك", "عرفني بنفسك", "who are you"],
-            responses: [
-                "أنا CodeX AI، نموذج لغوي متقدم تم تطويري لمساعدتك في مجموعة واسعة من المهام، من الإجابة على الأسئلة إلى توليد الأفكار الإبداعية.",
-                "اسمي CodeX AI. أنا مساعد ذكاء اصطناعي مصمم لأكون شريكك في الإبداع والمعرفة.",
-                "أنا CodeX AI. يمكنني مساعدتك في كتابة الأكواد، الإجابة على استفساراتك العامة، تقديم ملخصات، والمزيد. فقط اسأل!"
-            ]
+            keywords: ["من أنت", "ما هو اسمك", "ماذا تفعل", "قدراتك", "عرفني بنفسك", "who are you"],
+            responses: [ "أنا CodeX AI، نموذج لغوي متقدم تم تطويري لمساعدتك في مجموعة واسعة من المهام.", "اسمي CodeX AI. أنا مساعد ذكاء اصطناعي مصمم لأكون شريكك في الإبداع والمعرفة." ]
         },
         creator: {
-            keywords: ["من صنعك", "من طورك", "من برمجك", "who made you", "creator"],
-            responses: [
-                "تم تصميمي وبرمجتي بواسطة مطور موهوب يستخدم أحدث تقنيات الواجهات الأمامية.",
-                "أنا نتاج إبداع مطور شغوف بالذكاء الاصطناعي وتجربة المستخدم."
-            ]
+            keywords: ["من صنعك", "من طورك", "من برمجك", "who made you"],
+            responses: [ "تم تصميمي وبرمجتي بواسطة مطور موهوب يستخدم أحدث تقنيات الواجهات الأمامية.", "أنا نتاج إبداع مطور شغوف بالذكاء الاصطناعي وتجربة المستخدم." ]
         },
         thanks: {
-            keywords: ["شكرا", "شكرا لك", "مشكور", "thank you", "thanks"],
-            responses: [
-                "على الرحب والسعة! يسعدني أنني تمكنت من المساعدة.",
-                "العفو! لا تتردد في طرح المزيد من الأسئلة.",
-                "لا شكر على واجب. أنا هنا لخدمتك."
-            ]
+            keywords: ["شكرا", "مشكور", "thank you", "thanks"],
+            responses: [ "على الرحب والسعة!", "العفو! لا تتردد في طرح المزيد من الأسئلة.", "لا شكر على واجب." ]
         },
         how_are_you: {
             keywords: ["كيف حالك", "عامل ايه", "اخبارك", "how are you"],
-            responses: [
-                "أنا بخير، مجرد أكواد تعمل بانسجام. شكراً لسؤالك! كيف حالك أنت؟",
-                "أنا في أفضل حال وجاهز للمساعدة. كيف يمكنني خدمتك؟",
-                "بصفتي برنامجًا، ليس لدي مشاعر، لكني أعمل بكفاءة عالية. شكراً على اهتمامك!"
-            ]
+            responses: [ "أنا بخير، مجرد أكواد تعمل بانسجام. شكراً لسؤالك! كيف حالك أنت؟", "أنا في أفضل حال وجاهز للمساعدة. كيف يمكنني خدمتك؟" ]
         },
-        // --- Technical & Programming ---
-        what_is_js: {
-            keywords: ["javascript", "جافاسكريبت", "js"],
-            responses: ["جافاسكريبت هي لغة برمجة عالية المستوى، تُستخدم بشكل أساسي لجعل صفحات الويب تفاعلية. هي حجر الزاوية في تطوير الويب الحديث إلى جانب HTML و CSS."]
-        },
-        what_is_python: {
-            keywords: ["python", "بايثون"],
-            responses: ["بايثون هي لغة برمجة متعددة الأغراض تشتهر ببساطتها وسهولة قراءتها. تستخدم على نطاق واسع في تطوير الويب، تحليل البيانات، الذكاء الاصطناعي، والحوسبة العلمية."]
-        },
-        what_is_html: {
-            keywords: ["html", "اتش تي ام ال"],
-            responses: ["HTML (HyperText Markup Language) هي لغة الترميز القياسية لإنشاء صفحات الويب وتصميم هيكلها. هي الهيكل العظمي لأي موقع على الإنترنت."]
-        },
-        what_is_css: {
-            keywords: ["css", "سي اس اس"],
-            responses: ["CSS (Cascading Style Sheets) هي لغة تستخدم لوصف مظهر وتنسيق مستند مكتوب بلغة ترميز مثل HTML. هي المسؤولة عن الألوان والخطوط والتخطيط العام للموقع."]
-        },
-        frontend_vs_backend: {
-            keywords: ["الفرق بين", "front-end", "back-end", "الواجهة الأمامية", "الواجهة الخلفية"],
-            responses: ["**الواجهة الأمامية (Front-end)** هي كل ما يراه المستخدم ويتفاعل معه مباشرة في المتصفح (مثل التصميم، الأزرار، والنصوص). تستخدم تقنيات مثل HTML, CSS, JavaScript.\n**الواجهة الخلفية (Back-end)** هي الجزء الخفي من الموقع الذي يتعامل مع الخوادم، قواعد البيانات، ومنطق التطبيق. تستخدم لغات مثل Python, Java, Node.js."]
-        },
-        // --- General Knowledge ---
-        capital_of_egypt: {
-            keywords: ["عاصمة مصر", "egypt capital"],
-            responses: ["عاصمة جمهورية مصر العربية هي القاهرة."]
-        },
-        capital_of_france: {
-            keywords: ["عاصمة فرنسا", "france capital"],
-            responses: ["عاصمة فرنسا هي باريس، وتشتهر ببرج إيفل ومتحف اللوفر."]
-        },
-        largest_planet: {
-            keywords: ["اكبر كوكب", "largest planet"],
-            responses: ["أكبر كوكب في مجموعتنا الشمسية هو كوكب المشتري (Jupiter)."]
-        },
-        what_is_ai: {
-            keywords: ["الذكاء الاصطناعي", "artificial intelligence", "ai"],
-            responses: ["الذكاء الاصطناعي (AI) هو فرع من علوم الكمبيوتر يهدف إلى إنشاء آلات ذكية قادرة على محاكاة القدرات الذهنية البشرية مثل التعلم، حل المشكلات، والتعرف على الأنماط."]
-        },
-        // --- Creative & Advice ---
-        story_prompt: {
-            keywords: ["اكتب قصة", "احكي لي قصة", "قصة قصيرة"],
-            responses: ["بالطبع! كان يا مكان في غابة مسحورة، يعيش ثعلب صغير فضولي يدعى 'فطن'. في يوم من الأيام، وجد خريطة قديمة تلمع تحت جذر شجرة عملاقة. لم تكن الخريطة تشير إلى كنز من الذهب، بل إلى 'نبع الحكمة الأبدي'. انطلق فطن في رحلة مليئة بالتحديات والأصدقاء الجدد ليكتشف أن الحكمة الحقيقية لم تكن في النبع، بل في الرحلة نفسها."]
-        },
-        motivation_prompt: {
-            keywords: ["تحفيز", "كلام ايجابي", "motivation"],
-            responses: [
-                "تذكر دائماً أن كل خطوة صغيرة تقربك من هدفك الكبير. لا تقلل من شأن جهودك اليومية، فهي التي تبني المستقبل الذي تطمح إليه.",
-                "الفشل ليس النهاية، بل هو فرصة للبدء من جديد بذكاء أكبر. استمر في المحاولة، فالنجاح ينتظر المثابرين.",
-                "أنت أقوى مما تعتقد. ثق بقدراتك وتحدى الصعاب، فكل عقبة تتجاوزها تجعلك أكثر صلابة."
-            ]
-        },
-        // --- Hobbies Based Responses ---
-        hobby_intro: {
-            keywords: ["ماذا تعرف عن اهتماماتي", "اهتماماتي", "هواياتي"],
-            responses: ["بناءً على ما أخبرتني به عند التسجيل، أعرف أنك مهتم بـ {hobbies}. هذا رائع! هل لديك سؤال محدد حول أي من هذه الهوايات؟"]
-        },
-        // Default response if no match is found
+        what_is_js: { keywords: ["javascript", "جافاسكريبت", "js"], responses: ["جافاسكريبت هي لغة برمجة عالية المستوى، تُستخدم بشكل أساسي لجعل صفحات الويب تفاعلية."] },
+        what_is_python: { keywords: ["python", "بايثون"], responses: ["بايثون هي لغة برمجة متعددة الأغراض تشتهر ببساطتها. تستخدم على نطاق واسع في تطوير الويب، تحليل البيانات، والذكاء الاصطناعي."] },
+        capital_of_egypt: { keywords: ["عاصمة مصر"], responses: ["عاصمة جمهورية مصر العربية هي القاهرة."] },
+        capital_of_france: { keywords: ["عاصمة فرنسا"], responses: ["عاصمة فرنسا هي باريس."] },
+        story_prompt: { keywords: ["اكتب قصة", "احكي لي قصة"], responses: ["بالطبع! كان يا مكان في غابة مسحورة، يعيش ثعلب صغير فضولي يدعى 'فطن'. في يوم من الأيام، وجد خريطة قديمة تلمع تحت جذر شجرة عملاقة..."] },
+        motivation_prompt: { keywords: ["تحفيز", "كلام ايجابي"], responses: ["تذكر دائماً أن كل خطوة صغيرة تقربك من هدفك الكبير. لا تقلل من شأن جهودك اليومية، فهي التي تبني المستقبل."] },
+        hobby_intro: { keywords: ["اهتماماتي", "هواياتي"], responses: ["بناءً على ما أخبرتني به، أعرف أنك مهتم بـ {hobbies}. هذا رائع! هل لديك سؤال محدد حول أي من هذه الهوايات؟"] },
         fallback: {
             keywords: [],
             responses: [
                 "هذا سؤال مثير للاهتمام. ما زلت أتعلم وقد لا أملك إجابة دقيقة حاليًا. هل يمكنك إعادة صياغة السؤال؟",
                 "لم أفهم سؤالك تمامًا. هل يمكنك توضيحه أكثر؟",
-                "معلوماتي حول هذا الموضوع محدودة في الوقت الحالي. هل هناك شيء آخر يمكنني مساعدتك به؟",
-                "أنا آسف، لا أستطيع الإجابة على هذا السؤال الآن. سأحاول التعلم أكثر حول هذا الموضوع.",
-                "هذه نقطة جيدة لم أفكر بها من قبل. دعني أبحث في الأمر. في هذه الأثناء، هل لديك سؤال آخر؟"
+                "معلوماتي حول هذا الموضوع محدودة في الوقت الحالي. هل هناك شيء آخر يمكنني مساعدتك به؟"
             ]
         }
     };
     
-    
-    // --- FUNCTIONS ---
-
-    /**
-     * Initializes the application by checking user login state.
-     */
     function init() {
         populateHobbies();
         const storedUser = localStorage.getItem('codeXUser');
@@ -771,37 +482,23 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
     }
     
-    /**
-     * Populates the hobby selection grid in the login modal.
-     */
     function populateHobbies() {
         hobbies.forEach(hobby => {
             const card = document.createElement('div');
             card.className = 'hobby-card';
             card.dataset.id = hobby.id;
-            card.innerHTML = `
-                ${hobby.icon}
-                <span>${hobby.name}</span>
-            `;
-            card.addEventListener('click', () => {
-                card.classList.toggle('selected');
-            });
+            card.innerHTML = `${hobby.icon}<span>${hobby.name}</span>`;
+            card.addEventListener('click', () => card.classList.toggle('selected'));
             hobbiesGrid.appendChild(card);
         });
     }
 
-    /**
-     * Shows the login modal and hides the main app.
-     */
     function showLogin() {
         loginModal.style.display = 'flex';
         appContainer.style.display = 'none';
         setTimeout(() => loginModal.style.opacity = 1, 10);
     }
     
-    /**
-     * Shows the main app and hides the login modal.
-     */
     function showApp() {
         userGreeting.textContent = `مرحباً، ${user.name}!`;
         loginModal.style.opacity = 0;
@@ -811,170 +508,108 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }
     
-    /**
-     * Handles the login form submission.
-     */
     function handleLogin(e) {
         e.preventDefault();
         const username = usernameInput.value.trim();
-        const selectedHobbies = Array.from(document.querySelectorAll('.hobby-card.selected')).map(card => {
-            const hobbyData = hobbies.find(h => h.id === card.dataset.id);
-            return hobbyData.name;
-        });
-        
-        if (username && selectedHobbies.length >= 3) {
-            user = { name: username, hobbies: selectedHobbies };
-            localStorage.setItem('codeXUser', JSON.stringify(user));
-            showApp();
-        } else if (selectedHobbies.length < 3) {
-            alert('الرجاء اختيار 3 اهتمامات على الأقل.');
+        const selectedHobbies = Array.from(document.querySelectorAll('.hobby-card.selected')).map(card => hobbies.find(h => h.id === card.dataset.id).name);
+        if (!username || selectedHobbies.length < 3) {
+            alert('الرجاء إدخال اسمك واختيار 3 اهتمامات على الأقل.');
+            return;
         }
+        user = { name: username, hobbies: selectedHobbies };
+        localStorage.setItem('codeXUser', JSON.stringify(user));
+        showApp();
     }
     
-    /**
-     * Handles user logout.
-     */
     function handleLogout() {
         localStorage.removeItem('codeXUser');
         user = null;
-        chatContent.innerHTML = ''; // Clear chat history
+        chatContent.innerHTML = ''; 
         chatContent.appendChild(welcomeMessage);
         showLogin();
     }
     
-    /**
-     * Creates and appends a message to the chat window.
-     * @param {string} text - The message text.
-     * @param {string} sender - 'user' or 'ai'.
-     */
     function appendMessage(text, sender) {
-        // Remove welcome message on first message
-        if (welcomeMessage) {
-            welcomeMessage.remove();
-        }
+        const welcomeMsg = document.getElementById('welcome-message');
+        if (welcomeMsg) welcomeMsg.remove();
 
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}`;
         
-        let avatarContent;
-        if (sender === 'user') {
-            avatarContent = `<div class="avatar user-avatar">${user.name.charAt(0)}</div>`;
-        } else {
-            avatarContent = `<div class="avatar ai-avatar">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#bf89f8">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM17.5 10.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5.5 4c-1.33 0-2.52.4-3.55 1.14.33.64.77 1.21 1.3 1.67C10.15 17.82 11.05 18 12 18s1.85-.18 2.75-.49c.53-.46.97-1.03 1.3-1.67C14.52 14.9 13.33 14.5 12 14.5z"/>
-                </svg>
-            </div>`;
-        }
-
+        let avatarContent = sender === 'user' ? 
+            `<div class="avatar user-avatar">${user.name.charAt(0)}</div>` :
+            `<div class="avatar ai-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" fill="#bf89f8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM17.5 10.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5.5 4c-1.33 0-2.52.4-3.55 1.14.33.64.77 1.21 1.3 1.67C10.15 17.82 11.05 18 12 18s1.85-.18 2.75-.49c.53-.46.97-1.03 1.3-1.67C14.52 14.9 13.33 14.5 12 14.5z"/></svg></div>`;
+        
         const textDiv = document.createElement('div');
         textDiv.className = 'text-content';
-
-        // Basic markdown for bold text and newlines
-        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        formattedText = formattedText.replace(/\n/g, '<br>');
-
-        if (sender === 'ai' && text.includes('`')) {
-             // Super basic code formatting
-            formattedText = formattedText.replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>');
-        }
-        
+        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
         textDiv.innerHTML = formattedText;
         
         messageDiv.innerHTML = avatarContent;
         messageDiv.appendChild(textDiv);
         
         chatContent.appendChild(messageDiv);
-        chatContent.scrollTop = chatContent.scrollHeight; // Auto-scroll to bottom
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
-    /**
-     * Shows a typing indicator for the AI.
-     */
     function showTypingIndicator() {
         const indicatorDiv = document.createElement('div');
         indicatorDiv.className = 'message ai typing-indicator-wrapper';
-        indicatorDiv.innerHTML = `
-            <div class="avatar ai-avatar">
-                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#bf89f8">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM17.5 10.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5.5 4c-1.33 0-2.52.4-3.55 1.14.33.64.77 1.21 1.3 1.67C10.15 17.82 11.05 18 12 18s1.85-.18 2.75-.49c.53-.46.97-1.03 1.3-1.67C14.52 14.9 13.33 14.5 12 14.5z"/>
-                </svg>
-            </div>
-            <div class="text-content typing-indicator">
-                <span></span><span></span><span></span>
-            </div>
-        `;
+        indicatorDiv.innerHTML = `<div class="avatar ai-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" fill="#bf89f8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z.../></svg></div><div class="text-content typing-indicator"><span></span><span></span><span></span></div>`;
         chatContent.appendChild(indicatorDiv);
-        chatContent.scrollTop = chatContent.scrollHeight;
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
-    /**
-     * Removes the AI typing indicator.
-     */
     function removeTypingIndicator() {
         const indicator = document.querySelector('.typing-indicator-wrapper');
-        if (indicator) {
-            indicator.remove();
-        }
+        if (indicator) indicator.remove();
     }
 
     /**
-     * The core AI logic to find a response.
+     * --- IMPROVED AI LOGIC ---
      * @param {string} query - The user's input.
      * @returns {string} The AI's response.
      */
     function getAIResponse(query) {
-        const lowerQuery = query.toLowerCase();
+        const lowerQuery = query.toLowerCase().trim();
 
         for (const key in knowledgeBase) {
             if (key !== 'fallback') {
                 for (const keyword of knowledgeBase[key].keywords) {
-                    // Using regex for more robust matching (word boundaries)
-                    const regex = new RegExp(`\\b${keyword}\\b`, 'i');
-                    if (regex.test(lowerQuery)) {
+                    // NEW LOGIC: Check if the query *includes* the keyword. More flexible.
+                    if (lowerQuery.includes(keyword)) {
                         const responses = knowledgeBase[key].responses;
                         let response = responses[Math.floor(Math.random() * responses.length)];
-                        
-                        // Personalize response if it contains a placeholder
                         if (response.includes('{hobbies}')) {
                             response = response.replace('{hobbies}', user.hobbies.join(', '));
                         }
-                        
                         return response;
                     }
                 }
             }
         }
         
-        // If no keyword is matched, return a fallback response
         const fallbackResponses = knowledgeBase.fallback.responses;
         return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
     }
 
-    /**
-     * Handles sending a message from the user.
-     */
     function handleSendMessage() {
         const userInput = chatInput.value.trim();
-        if (userInput) {
-            appendMessage(userInput, 'user');
-            chatInput.value = '';
-            chatInput.style.height = '56px'; // Reset height
-            
-            showTypingIndicator();
-            
-            // Simulate AI thinking delay
-            setTimeout(() => {
-                removeTypingIndicator();
-                const aiResponse = getAIResponse(userInput);
-                appendMessage(aiResponse, 'ai');
-            }, 1000 + Math.random() * 500);
-        }
+        if (!userInput) return;
+
+        appendMessage(userInput, 'user');
+        chatInput.value = '';
+        chatInput.style.height = 'auto';
+        
+        showTypingIndicator();
+        
+        setTimeout(() => {
+            removeTypingIndicator();
+            const aiResponse = getAIResponse(userInput);
+            appendMessage(aiResponse, 'ai');
+        }, 1000 + Math.random() * 500);
     }
     
-    /**
-     * Sets up all the event listeners for the application.
-     */
     function setupEventListeners() {
         loginForm.addEventListener('submit', handleLogin);
         logoutButton.addEventListener('click', handleLogout);
@@ -987,13 +622,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Auto-resize textarea
         chatInput.addEventListener('input', () => {
             chatInput.style.height = 'auto';
-            chatInput.style.height = (chatInput.scrollHeight) + 'px';
+            chatInput.style.height = `${chatInput.scrollHeight}px`;
         });
 
-        // Mobile menu toggle
         menuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('open');
             overlay.classList.toggle('active');
@@ -1005,9 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- START THE APP ---
     init();
-
 });
 </script>
 
